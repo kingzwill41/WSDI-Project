@@ -73,7 +73,7 @@
 												include('include/config.php');
 
 												//write query string
-												$selQuery = "SELECT * FROM patient";
+												$selQuery = "SELECT * FROM guest_appointment";
 
 												$results = mysqli_query($conn,$selQuery) or die("Could not find database record(s)".mysqli_error($conn));
 												

@@ -12,7 +12,7 @@
 					<a href="index.php" class="active">Home</a>
 				</li>
 				<li>
-					<a href="views/doctor/">Login</a>
+					<a href="make-appointment" class="active">Make Appointment</a>
 				</li>
 				<li>
 					<!--<a href="views/addpatient.php">Register</a>-->

@@ -1,11 +1,23 @@
 <?php
 	session_start();
 	
-	if(!isset($_SESSION['err']))
+	if(isset($_SESSION['err']))
 	{
-		$_SESSION['errUser'] = "";
-		$_SESSION['errPassword'] = "";
-		$_SESSION['username'] = "";
+		foreach($_SESSION as $key => $value)
+		{
+			$$key = $value;
+		}
+		session_destroy();
+	}
+	else{
+		$username = "";
+		$password = "";
+		
+		$_SESSION['errUser'] = " ";
+		$_SESSION['errPassword'] = " ";
+		$_SESSION['username'] = " ";
+
+		session_destroy();
 	}
 	
 	//var_dump($_SESSION);
@@ -35,7 +47,7 @@
 				</div>
 				
 				<div class="box-login">
-					<form class="form-login" action="loginValidation.php" method="post">
+					<form class="form-login" action="doc_Validation.php" method="post">
 						<fieldset>
 							<legend>Sign in to your account</legend>
 							<p>
@@ -43,7 +55,7 @@
 							</p>
 							<div class="form-group">
 								<span class="input-icon">
-									<input type="text" class="form-control" name="username" value="<?php echo $_SESSION['username']; ?>" placeholder="Username" />
+									<input type="text" class="form-control" name="username" value="<?php echo $username; ?>" placeholder="Username" />
 									<i class="fa fa-user"></i>
 									<?php echo $_SESSION['errUser']; ?>
 								</span>
@@ -52,7 +64,7 @@
 								<span class="input-icon">
 									<input type="password" class="form-control password" name="password" placeholder="Password" />
 									<i class="fa fa-lock"></i>
-									<?php echo $_SESSION['errPassword']; session_destroy();?>
+									<?php echo $_SESSION['errPassword'];?>
 								</span>
 								<a href="#">Forgot Password?</a>
 							</div>

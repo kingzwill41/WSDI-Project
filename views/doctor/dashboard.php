@@ -1,9 +1,9 @@
 <?php
-session_start();
-error_reporting(0);
-include('include/config.php');
-include('include/checklogin.php');
-check_login();
+	session_start();
+	//error_reporting(0);
+	include('include/config.php');
+	//include('include/checklogin.php');
+	//check_login();
 
 ?>
 <!DOCTYPE html>
@@ -30,7 +30,7 @@ check_login();
 	</head>
 	<body>
 		<div id="app">		
-<?php include('include/sidebar.php');?>
+			<?php include('include/sidebar.php');?>
 			<div class="app-content">
 				
 						<?php include('include/header.php');?>
@@ -65,7 +65,7 @@ check_login();
 											<h2 class="StepTitle">My Profile</h2>
 											
 											<p class="links cl-effect-1">
-												<a href="edit-profile.php">
+												<a href="edit-profile.php?id=<?php echo $row['StaffID'];?>">
 													Update Profile
 												</a>
 											</p>
