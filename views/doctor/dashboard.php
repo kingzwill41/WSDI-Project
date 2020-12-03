@@ -32,8 +32,7 @@
 		<div id="app">		
 			<?php include('include/sidebar.php');?>
 			<div class="app-content">
-				
-						<?php include('include/header.php');?>
+				<?php include('include/header.php');?>
 						
 				<!-- end: TOP NAVBAR -->
 				<div class="main-content" >

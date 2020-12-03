@@ -13,9 +13,10 @@
 		$username = "";
 		$password = "";
 		
-		$_SESSION['errUser'] = " ";
-		$_SESSION['errPassword'] = " ";
-		$_SESSION['username'] = " ";
+		//$_SESSION['errUser'] = " ";
+		//$_SESSION['errPassword'] = " ";
+		//$_SESSION['username'] = " ";
+		$lgerr ="";
 
 		session_destroy();
 	}
@@ -53,20 +54,19 @@
 							<p>
 								Please enter your name and password to log in.
 							</p>
+							<?php echo $lgerr; ?>
 							<div class="form-group">
 								<span class="input-icon">
 									<input type="text" class="form-control" name="username" value="<?php echo $username; ?>" placeholder="Username" />
 									<i class="fa fa-user"></i>
-									<?php echo $_SESSION['errUser']; ?>
 								</span>
 							</div>
 							<div class="form-group form-actions">
 								<span class="input-icon">
 									<input type="password" class="form-control password" name="password" placeholder="Password" />
 									<i class="fa fa-lock"></i>
-									<?php echo $_SESSION['errPassword'];?>
 								</span>
-								<a href="#">Forgot Password?</a>
+								<a href="forgot-password.php">Forgot Password?</a>
 							</div>
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary pull-right" name="loginSubmit">
