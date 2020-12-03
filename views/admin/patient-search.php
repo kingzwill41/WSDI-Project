@@ -1,9 +1,9 @@
 <?php
 	session_start();
-	//error_reporting(0);
-	//include('include/config.php');
-	//include('include/checklogin.php');
-	//check_login();
+	error_reporting(0);
+	include('include/config.php');
+	include('include/checklogin.php');
+	check_login();
 
 ?>
 <!DOCTYPE html>
@@ -52,10 +52,10 @@
 					<div class="container-fluid container-fullw bg-white">
 						<div class="row">
 							<div class="col-md-12">
-								<form role="form" method="post" name="search" action="admin_validation.php">
+								<form role="form" method="post" name="search" >
 									<div class="form-group">
 										<label for="doctorname">
-											Search by First Name/Mobile No./Email
+											Search by TRN/Name/Mobile No.
 										</label>
 										<input type="text" name="searchdata" id="searchdata" class="form-control" value="" required='true'>
 									</div>
@@ -64,7 +64,7 @@
 									</button>
 								</form>
 								<?php
-									if(isset($_POST['search']))
+									if(isset($_POST['searchSubmit']))
 									{ 
 
 										$sdata=$_POST['searchdata'];
@@ -75,13 +75,8 @@
 										<tr>
 											<th class="center">#</th>
 											<th>TRN</th>
-											<th>Title</th>
 											<th>First Name</th>
 											<th>Last Name</th>
-											<th>D.O.B.</th>
-											<th>Address</th>
-											<th>TelNo</th>
-											<th>Email</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -90,7 +85,7 @@
 										//connect to database
 										include("include/config.php");
 										//write and run query
-										$query = "SELECT * FROM `patient` WHERE FirstName like '%$sdata%' || TellNo like'%$sdata%' OR Email like'%$sdata%'";
+										$query = "SELECT * FROM `patient` WHERE TRN like '%$sdata%' || FirstName like '%$sdata%'|| LastName like '%$sdata%' || FirstName AND LastName like '%$sdata%' || TelNo like'%$sdata%'";
 										
 										$results = mysqli_query($conn, $query) or die("Could not update user information.".mysqli_error($conn));
 
@@ -105,16 +100,11 @@
 									<tr>
 										<td class="center"><?php echo $cnt;?>.</td>
 										<td><?php echo $row['TRN'];?></td>
-										<td><?php echo $row['Title'];?></td>
 										<td class="hidden-xs"><?php echo $row['FirstName'];?></td>
 										<td><?php echo $row['LastName'];?></td>
-										<td><?php echo $row['DOB'];?></td>
-										<td><?php echo $row['Address'];?></td>
-										<td><?php echo $row['TelNo'];?></td>
-										<td><?php echo $row['Email'];?></td>
 										<td>
 
-										<a href="view-patient.php?viewid=<?php echo $row['TRN'];?>"><i class="fa fa-eye"></i></a>
+										<a href="view-patient.php?id=<?php echo $row['TRN'];?>"><i class="fa fa-eye"></i></a>
 
 										</td>
 									</tr>

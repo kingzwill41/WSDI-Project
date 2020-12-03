@@ -1,23 +1,10 @@
 <?php
 	session_start();
-	//error_reporting(0);
-	//include('include/config.php');
-	//include('include/checklogin.php');
-	//check_login();
+	error_reporting(0);
+	include('include/config.php');
+	include('include/checklogin.php');
+	check_login();
 	$_SESSION['idk'] = $did=intval($_GET['id']);// get doctor id
-	/*if(isset($_POST['submit']))
-	{
-		//$docspecialization=$_POST['Doctorspecialization'];
-		$docname=$_POST['docname'];
-		$docemail=$_POST['docemail'];
-		$npass = $_POST['npass'];
-		$sql=mysqli_query($conn,"UPDATE staff SET Name='$docname',Email='$docemail',Password='$npass' WHERE StaffID='$did'");
-		if($sql)
-		{
-			$msg="Doctor Details updated Successfully";
-
-		}
-	}*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,9 +84,6 @@
 														{
 													?>
 													<h4><?php echo htmlentities($data['Name']);?>'s Profile</h4>
-													<?php if($data['updationDate']){?>
-													<p><b>Profile Last Updation Date: </b><?php echo htmlentities($data['updationDate']);?></p>
-													<?php } ?>
 													<hr />
 													<form role="form" name="adddoc" method="post" action="admin_validation.php">
 														<div class="form-group">

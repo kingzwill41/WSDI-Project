@@ -4,15 +4,18 @@
 	include('include/config.php');
 	include('include/checklogin.php');
 	check_login();
-	$vid=intval($_GET['id']);// get doctor id
 	
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Doctor | Manage Patients</title>
-		
+		<title>Admin | change Password</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta content="" name="description" />
+		<meta content="" name="author" />
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
@@ -27,102 +30,136 @@
 		<link rel="stylesheet" href="assets/css/styles.css">
 		<link rel="stylesheet" href="assets/css/plugins.css">
 		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
+		<script type="text/javascript">
+			function valid()
+			{
+				if(document.chngpwd.cpass.value=="")
+				{
+					alert("Current Password Filed is Empty !!");
+					document.chngpwd.cpass.focus();
+					return false;
+				}
+				else if(document.chngpwd.npass.value=="")
+				{
+					alert("New Password Filed is Empty !!");
+					document.chngpwd.npass.focus();
+					return false;
+				}
+				else if(document.chngpwd.cfpass.value=="")
+				{
+					alert("Confirm Password Filed is Empty !!");
+					document.chngpwd.cfpass.focus();
+					return false;
+				}
+				else if(document.chngpwd.npass.value!= document.chngpwd.cfpass.value)
+				{
+					alert("Password and Confirm Password Field do not match  !!");
+					document.chngpwd.cfpass.focus();
+					return false;
+				}
+				return true;
+			}
+		</script>
+
 	</head>
 	<body>
 		<div id="app">		
 			<?php include('include/sidebar.php');?>
 			<div class="app-content">
 				<?php include('include/header.php');?>
+		
+				</header>
+				<!-- end: TOP NAVBAR -->
 				<div class="main-content" >
 					<div class="wrap-content container" id="container">
 						<!-- start: PAGE TITLE -->
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Doctor | Manage Patients</h1>
+									<h1 class="mainTitle">Admin | Change Password</h1>
 								</div>
 								<ol class="breadcrumb">
 									<li>
-										<span>Doctor</span>
+										<span>Admin</span>
 									</li>
 									<li class="active">
-										<span>Manage Patients</span>
+										<span>Change Password</span>
 									</li>
 								</ol>
 							</div>
 						</section>
+						<!-- end: PAGE TITLE -->
+						<!-- start: BASIC EXAMPLE -->
 						<div class="container-fluid container-fullw bg-white">
 							<div class="row">
 								<div class="col-md-12">
-									<h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Patients</span></h5>
-									<?php
-										//create connection
-										include('include/config.php');
-
-										$selQuery = "SELECT * FROM patient WHERE TRN='$vid'";
-										$ret=mysqli_query($conn,$selQuery) or die("Could not find database record(s)".mysqli_error($conn));
-										
-										$cnt=1;
-										while ($row=mysqli_fetch_assoc($ret)) {
-                               		?>
-									<table border="1" class="table table-bordered">
-										<tr align="center">
-											<td colspan="4" style="font-size:20px;color:blue">
-												Patient Details
-											</td>
-										</tr>
-
-										<tr>
-											<th scope>Patient TRN</th>
-											<td><?php  echo $row['TRN'];?></td>
-											<th>Patient Title</th>
-											<td><?php  echo $row['Title'];?></td>
-										</tr>
-										<tr>
-											<th scope>Patient First Name</th>
-											<td><?php  echo $row['FirstName'];?></td>
-											<th scope>Patient Last Name</th>
-											<td><?php  echo $row['LastName'];?></td>
-										</tr>
-										<tr>
-											<th scope>Patient D.O.B.</th>
-											<td><?php  echo $row['DOB'];?></td>
-											<th scope>Patient Email</th>
-											<td><?php  echo $row['Email'];?></td>
-										</tr>
-										<tr>
-											<th scope>Patient Mobile Number</th>
-											<td><?php  echo $row['TelNo'];?></td>
-											<th>Patient Address</th>
-											<td><?php  echo $row['Address'];?></td>
-										</tr>
-										
-										<tr>
-		
-											<th>Patient Medical History(if any)</th>
-											<td><?php  echo $row['PatientMedhis'];?></td>
-											<th>Patient Reg Date</th>
-											<td><?php  echo $row['CreationDate'];?></td>
-										</tr>
-	
-										<?php }?>
-									</table>
-                          
+									
+									<div class="row margin-top-30">
+										<div class="col-lg-8 col-md-12">
+											<div class="panel panel-white">
+												<div class="panel-heading">
+													<h5 class="panel-title">Change Password</h5>
+												</div>
+												<div class="panel-body">
+													<p style="color:red;"><?php echo htmlentities($_SESSION['msg1']);?>
+														<?php echo htmlentities($_SESSION['msg1']="");?>
+													</p>	
+													<form role="form" name="chngpwd" method="post" action="admin_validation.php">
+														<div class="form-group">
+															<label for="exampleInputEmail1">
+																Current Password
+															</label>
+															<input type="password" name="cpass" class="form-control"  placeholder="Enter Current Password">
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPassword1">
+																New Password
+															</label>
+															<input type="password" name="npass" class="form-control"  placeholder="New Password">
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPassword1">
+																Confirm Password
+															</label>
+															<input type="password" name="cfpass" class="form-control"  placeholder="Confirm Password">
+														</div>
+														<button type="submit" name="changepwsubmit" class="btn btn-o btn-primary">
+															Submit
+														</button>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-12">
+									<div class="panel panel-white">
+											
+									</div>
+								</div>
+							</div>
 							</div>
 						</div>
+						</div>
+						<!-- end: BASIC EXAMPLE -->
+			
+					
+					
+						
+						
+					
+						<!-- end: SELECT BOXES -->
+						
 					</div>
 				</div>
 			</div>
-		</div>
-		</div>
-		</div>
-		<!-- start: FOOTER -->
-		<?php include('include/footer.php');?>
-		<!-- end: FOOTER -->
-		
-		<!-- start: SETTINGS -->
-		<?php include('include/setting.php');?>
+			<!-- start: FOOTER -->
+			<?php include('include/footer.php');?>
+				<!-- end: FOOTER -->
 			
+				<!-- start: SETTINGS -->
+			<?php include('include/setting.php');?>
+			<>
 			<!-- end: SETTINGS -->
 		</div>
 		<!-- start: MAIN JAVASCRIPTS -->

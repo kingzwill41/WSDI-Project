@@ -43,19 +43,18 @@
 
             if(mysqli_num_rows($result)== 1)
             {
-                $_SESSION['lgtoken'] = "Logged";
+                $_SESSION['lgerr'] = "<p style='color: green; font-weight:bold'>Username and Password match found.</p>";
                 $_SESSION['username'] = $username;
-                $_SESSION['password'] = $password;
 
                 //redirect to admin dashboard
                 header("Location: dashboard.php");
-                //exit();
+                exit();
             }
             else{
                 $_SESSION['lgerr'] = "<p style='color: red; font-weight:bold'>Username and Password not found.</p>";
                 //redirect back to Admin Login page and display error messages
                 header("Location: index.php");
-                //exit();
+                exit();
             }
         }
         else{
@@ -309,6 +308,30 @@
             header("Location: manage-nurses.php");
         }
 
+    }
+
+    if(isset($_POST['changepwsubmit']))
+    {
+        include('include/config.php');
+
+        $selQuery = "SELECT Password FROM staff WHERE password='".$_POST['cpass']."' && Email='".$_SESSION['username']."'";
+        $result = mysqli_query($conn,$selQuery);
+        
+        //$num=mysqli_fetch_assoc($result);
+        if(mysqli_num_rows($result)== 1)
+        {
+            $upQuery = "UPDATE staff SET password='".$_POST['npass']."' WHERE Email='".$_SESSION['username']."'";
+            $res=mysqli_query($conn,$upQuery);
+            $_SESSION['msg1']="Password Changed Successfully !!";
+            //header("Location: change-password.php");
+        }
+        else
+        {
+            $_SESSION['msg1']="Old Password not match !!";
+            //header("Location: change-password.php");
+        }
+        
+        header("Location: change-password.php");
     }
 
 ?>

@@ -1,9 +1,9 @@
 <?php
 	session_start();
-	//error_reporting(0);
-	//include('include/config.php');
-	//include('include/checklogin.php');
-	//check_login();
+	error_reporting(0);
+	include('include/config.php');
+	include('include/checklogin.php');
+	check_login();
 
 ?>
 <!DOCTYPE html>
@@ -57,13 +57,10 @@
 										<thead>
 											<tr>
 												<th class="center">#</th>
+												<th>TRN</th>
 												<th>Title</th>
 												<th>First Name</th>
 												<th>Last Name</th>
-												<th>D.O.B.</th>
-												<th>Address</th>
-												<th>Tell No.</th>
-												<th>Email</th>
 												<th>Action</th>
 											</tr>
 										</thead>
@@ -73,7 +70,7 @@
 												include('include/config.php');
 
 												//write query string
-												$selQuery = "SELECT * FROM guest_appointment";
+												$selQuery = "SELECT * FROM patient";
 
 												$results = mysqli_query($conn,$selQuery) or die("Could not find database record(s)".mysqli_error($conn));
 												
@@ -83,15 +80,12 @@
 											?>
 											<tr>
 												<td class="center"><?php echo $cnt;?>.</td>
+												<td><?php echo $row['TRN']; ?></td>
 												<td class="hidden-xs"><?php echo $row['Title'];?></td>
 												<td><?php echo $row['FirstName'];?></td>
 												<td><?php echo $row['LastName'];?></td>
-												<td><?php echo $row['DOB'];?></td>
-												<td><?php echo $row['Address'];?></td>
-												<td><?php echo $row['TellNo'];?></td>
-												<td><?php echo $row['Email'];?></td>
 												<td>
-													<a href="view-patient.php?viewid=<?php echo $row['StaffID'];?>"><i class="fa fa-eye"></i></a>
+													<a href="view-patient.php?id=<?php echo $row['TRN'];?>"><i class="fa fa-eye"></i></a>
 
 												</td>
 											</tr>

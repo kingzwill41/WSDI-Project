@@ -1,9 +1,9 @@
 <?php
-	//session_start();
-	//error_reporting(0);
-	//include('include/config.php');
-	//include('include/checklogin.php');
-	//check_login();
+	session_start();
+	error_reporting(0);
+	include('include/config.php');
+	include('include/checklogin.php');
+	check_login();
 
 ?>
 <!DOCTYPE html>
@@ -66,7 +66,7 @@
 											<p class="links cl-effect-1">
 												<a href="manage-nurses.php">
 													<?php 
-														$result = mysqli_query($con,"SELECT * FROM users ");
+														$result = mysqli_query($conn,"SELECT * FROM staff WHERE type='nurse' ");
 														$num_rows = mysqli_num_rows($result);
 														{
 													?>
@@ -85,7 +85,7 @@
 											<p class="cl-effect-1">
 												<a href="manage-doctors.php">
 													<?php 
-														$result1 = mysqli_query($con,"SELECT * FROM doctors ");
+														$result1 = mysqli_query($conn,"SELECT * FROM staff WHERE type='doctor' ");
 														$num_rows1 = mysqli_num_rows($result1);
 														{
 													?>
@@ -105,7 +105,7 @@
 												<a href="book-appointment.php">
 													<a href="appointment-history.php">
 														<?php 
-															$sql= mysqli_query($con,"SELECT * FROM appointment");
+															$sql= mysqli_query($conn,"SELECT * FROM appointment");
 															$num_rows2 = mysqli_num_rows($sql);
 															{
 														?>
@@ -125,7 +125,7 @@
 											
 											<p class="links cl-effect-1">
 												<a href="manage-patient.php">
-													<?php $result = mysqli_query($con,"SELECT * FROM tblpatient ");
+													<?php $result = mysqli_query($conn,"SELECT * FROM patient ");
 														$num_rows = mysqli_num_rows($result);
 														{
 													?>

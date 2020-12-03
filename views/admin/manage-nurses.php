@@ -1,9 +1,9 @@
 <?php
 	session_start();
-	//error_reporting(0);
+	error_reporting(0);
 	include('include/config.php');
-	//include('include/checklogin.php');
-	//check_login();
+	include('include/checklogin.php');
+	check_login();
 
 	if(isset($_GET['del']))
 	{
@@ -70,6 +70,7 @@
 										<thead>
 											<tr>
 												<th class="center">#</th>
+												<th class="center">Staff ID</th>
 												<th>Nurse Name</th>
 												<th class="hidden-xs">Nurse Email</th>
 												<th>Password</th>
@@ -94,6 +95,7 @@
 
 											<tr>
 												<td class="center"><?php echo $cnt;?>.</td>
+												<td class="center"><?php echo $row['StaffID']; ?></td>
 												<td class="hidden-xs"><?php echo $row['Name'];?></td>
 												<td><?php echo $row['Email'];?></td>
 												<td><?php echo $row['Password'];?></td>

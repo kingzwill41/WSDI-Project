@@ -1,5 +1,9 @@
 <?php
 	session_start();
+	error_reporting(0);
+	include('include/config.php');
+	include('include/checklogin.php');
+	check_login();
 
 	if(isset($_SESSION['errflag']))
 	{
@@ -7,7 +11,7 @@
 		{
 			$$key = $value;
 		}
-		session_destroy();
+		//session_destroy();
 	}
 	else{
 		//default variable values
@@ -17,7 +21,7 @@
 		//default error message
 		$nursenameerr = $nursemaillerr = $pwerr = "";
 
-		session_destroy();
+		//session_destroy();
 	}
 	
 ?>
