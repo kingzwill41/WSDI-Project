@@ -5,7 +5,7 @@
 			<h1 style="float: right; text-size: 40px;">Avocado Medical Centre</h1>
 		</a>
 				
-		<div class="top-nav">
+		<div class="top-nav" >
 					
 			<ul>
 				<li>
@@ -16,10 +16,13 @@
 				</li>
 				<li>
 					<!--<a href="views/addpatient.php">Register</a>-->
-					<a href="#">Register</a>
+					<a href="#" class="active">Register</a>
 				</li>
 				<li>
-					<a hre="aboutus.php">About Us</a>
+					<a href="aboutus.php" class="active">About Us</a>
+				<li>
+				<li>
+					<a href="contact.php" class="active">Contact Us</a>
 				<li>
 			</ul>
 		</div>
