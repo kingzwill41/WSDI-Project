@@ -59,15 +59,27 @@
 									</li>
 									
 								</ul>
-								</li>
-<li>
+							</li>
+							<li>
 								<a href="search.php">
 									<div class="item-content">
 										<div class="item-media">
 											<i class="ti-search"></i>
 										</div>
 										<div class="item-inner">
-											<span class="title"> Search </span>
+											<span class="title"> Search Patient</span>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="search-appointment.php">
+									<div class="item-content">
+										<div class="item-media">
+											<i class="ti-search"></i>
+										</div>
+										<div class="item-inner">
+											<span class="title"> Search Appointment</span>
 										</div>
 									</div>
 								</a>

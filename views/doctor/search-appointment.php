@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Doctor | Manage Patients</title>
+		<title>Doctor | Manage Appointments</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -37,14 +37,14 @@
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Doctor | Manage Patients</h1>
+									<h1 class="mainTitle">Doctor | Manage Appointments</h1>
 								</div>
 								<ol class="breadcrumb">
 									<li>
 										<span>Doctor</span>
 									</li>
 									<li class="active">
-										<span>Manage Patients</span>
+										<span>Manage Appointments</span>
 									</li>
 								</ol>
 							</div>
@@ -52,61 +52,81 @@
 						<div class="container-fluid container-fullw bg-white">
 							<div class="row">
 								<div class="col-md-12">
-									<h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Patients</span></h5>
-										<table class="table table-hover" id="sample-table-1">
-											<thead>
-												<tr>
-													<th class="center">#</th>
-													<th>TRN</th>
-													<th>Title</th>
-													<th>First Name</th>
-													<th>Last Name</th>
-													<th>Creation Date </th>
-													<th>Action</th>
-												</tr>
-											</thead>
-											<tbody>
-												<?php
-													//create connection
-													include('include/config.php');
+									<form role="form" method="post" name="search">
+										<div class="form-group">
+											<label for="doctorname">
+												Search by TRN
+											</label>
+											<input type="text" name="searchdata" id="searchdata" class="form-control" value="" required='true'>
+										</div>
 
-													$docid=$_SESSION['id'];
+										<button type="submit" name="searchappSubmit" id="submit" class="btn btn-o btn-primary">
+											Search
+										</button>
+									</form>	
+									<?php
+										if(isset($_POST['searchappSubmit']))
+										{ 
 
-													//write query string
-													$selQuery = "SELECT * FROM patient where StaffID='$docid'";
+											$sdata=$_POST['searchdata'];
+									?>
+									<h4 align="center">Result against "<?php echo $sdata;?>" keyword </h4>
 
-													$results = mysqli_query($conn,$selQuery) or die("Could not find database record(s)".mysqli_error($conn));
-												
-													$cnt=1;
-													while($row=mysqli_fetch_assoc($results))
-													{
-												?>
-												<tr>
-													<td class="center"><?php echo $cnt;?>.</td>
-													<td><?php echo $row['TRN']; ?></td>
-													<td class="hidden-xs"><?php echo $row['Title'];?></td>
-													<td><?php echo $row['FirstName'];?></td>
-													<td><?php echo $row['LastName'];?></td>
-													<td><?php echo $row['CreationDate'];?></td>
-													<td>
+									<table class="table table-hover" id="sample-table-1">
+									<thead>
+										<tr>
+											<th class="center">#</th>
+											<th>TRN</th>
+											<th>StaffID</th>
+											<th>Date</th>
+											<th>ReasonForVisit</th>
+											<th>Status</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php
+											//connect to database
+											include("include/config.php");
+											$query = "SELECT * FROM `appointment` WHERE TRN like '%$sdata%'";
 
-													<a href="edit-patient.php?id=<?php echo $row['TRN'];?>"><i class="fa fa-edit"></i></a> || 
-													<a href="view-patient.php?id=<?php echo $row['TRN'];?>"><i class="fa fa-eye"></i></a>
+											$results = mysqli_query($conn, $query) or die("Could not update user information.".mysqli_error($conn));
 
-													</td>
-												</tr>
-												<?php 
-													$cnt=$cnt+1;
-												}?>
-											</tbody>
-										</table>
-									</div>
-								</div>
+											$num=mysqli_num_rows($results);
+											if($num>0){
+												$cnt=1;
+												while($row=mysqli_fetch_assoc($results))
+												{
+										?>
+										<tr>
+											<td class="center"><?php echo $cnt;?>.</td>
+											<td><?php echo $row['TRN'];?></td>
+											<td class="hidden-xs"><?php echo $row['StaffID'];?></td>
+											<td><?php echo $row['Date'];?></td>
+											<td><?php echo $row['ReasonForVisit'];?></td>
+											<td><?php echo $row['Status'];?></td>
+											<td>
+												<a href="edit-appointment.php?id=<?php echo $row['TRN'];?>"><i class="fa fa-edit"></i></a>
+											</td>
+										</tr>
+										<?php 
+											$cnt=$cnt+1;
+											} } else { 
+										?>
+										<tr>
+											<td colspan="8"> No record found against this search</td>
+										</tr>
+			
+										<?php }} ?>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+		</div>
 		</div>
 			<!-- start: FOOTER -->
 		<?php include('include/footer.php');?>

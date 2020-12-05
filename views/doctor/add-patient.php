@@ -1,28 +1,36 @@
 <?php
-session_start();
-error_reporting(0);
-include('include/config.php');
-include('include/checklogin.php');
-check_login();
+	session_start();
+	error_reporting(0);
+	include('include/config.php');
+	include('include/checklogin.php');
+	check_login();
 
-if(isset($_POST['submit']))
-{	
-	$docid=$_SESSION['id'];
-	$patname=$_POST['patname'];
-$patcontact=$_POST['patcontact'];
-$patemail=$_POST['patemail'];
-$gender=$_POST['gender'];
-$pataddress=$_POST['pataddress'];
-$patage=$_POST['patage'];
-$medhis=$_POST['medhis'];
-$sql=mysqli_query($con,"insert into tblpatient(Docid,PatientName,PatientContno,PatientEmail,PatientGender,PatientAdd,PatientAge,PatientMedhis) values('$docid','$patname','$patcontact','$patemail','$gender','$pataddress','$patage','$medhis')");
-if($sql)
-{
-echo "<script>alert('Patient info added Successfully');</script>";
-header('location:add-patient.php');
+	if(isset($_SESSION['errflag']))
+	{
+		foreach($_SESSION as $key => $value)
+		{
+			$$key = $value;
+		}
+		//session_destroy();
+	}
+	else{
+		//default variables
+		$patfname = $patlname = $patcontact = $patemail = "";
+		$pattitle = $pattrn = $pataddress = $patdob = "";
+		
+		//default error messages
+		$errFName = $errLName = $errContact = $errEmail = "";
+		$errTitle = $errTRN = $errAddress = $errDOB = "";
 
-}
-}
+		session_destroy();
+	}
+
+	if(isset($_GET['check']))
+	{
+		echo "<script>alert('Patient info added Successfully');</script>";
+		header('location: manage-patient.php');
+	}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,137 +52,152 @@ header('location:add-patient.php');
 		<link rel="stylesheet" href="assets/css/plugins.css">
 		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
 
-	<script>
-function userAvailability() {
-$("#loaderIcon").show();
-jQuery.ajax({
-url: "check_availability.php",
-data:'email='+$("#patemail").val(),
-type: "POST",
-success:function(data){
-$("#user-availability-status1").html(data);
-$("#loaderIcon").hide();
-},
-error:function (){}
-});
-}
-</script>
+		<script>
+			function userAvailability() {
+			$("#loaderIcon").show();
+			jQuery.ajax({
+			url: "check_availability.php",
+			data:'email='+$("#patemail").val(),
+			type: "POST",
+			success:function(data){
+			$("#user-availability-status1").html(data);
+			$("#loaderIcon").hide();
+			},
+			error:function (){}
+			});
+			}
+		</script>
 	</head>
 	<body>
 		<div id="app">		
-<?php include('include/sidebar.php');?>
-<div class="app-content">
-<?php include('include/header.php');?>
-						
-<div class="main-content" >
-<div class="wrap-content container" id="container">
-						<!-- start: PAGE TITLE -->
-<section id="page-title">
-<div class="row">
-<div class="col-sm-8">
-<h1 class="mainTitle">Patient | Add Patient</h1>
-</div>
-<ol class="breadcrumb">
-<li>
-<span>Patient</span>
-</li>
-<li class="active">
-<span>Add Patient</span>
-</li>
-</ol>
-</div>
-</section>
-<div class="container-fluid container-fullw bg-white">
-<div class="row">
-<div class="col-md-12">
-<div class="row margin-top-30">
-<div class="col-lg-8 col-md-12">
-<div class="panel panel-white">
-<div class="panel-heading">
-<h5 class="panel-title">Add Patient</h5>
-</div>
-<div class="panel-body">
-<form role="form" name="" method="post">
+			<?php include('include/sidebar.php');?>
+			<div class="app-content">
+				<?php include('include/header.php');?>
+									
+				<div class="main-content" >
+				<div class="wrap-content container" id="container">
+									<!-- start: PAGE TITLE -->
+					<section id="page-title">
+						<div class="row">
+							<div class="col-sm-8">
+								<h1 class="mainTitle">Patient | Add Patient</h1>
+							</div>
+							<ol class="breadcrumb">
+								<li>
+								<span>Patient</span>
+								</li>
+								<li class="active">
+								<span>Add Patient</span>
+								</li>
+							</ol>
+						</div>
+					</section>
+					<div class="container-fluid container-fullw bg-white">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row margin-top-30">
+								<div class="col-lg-8 col-md-12">
+									<div class="panel panel-white">
+										<div class="panel-heading">
+											<h5 class="panel-title">Add Patient</h5>
+										</div>
+										<div class="panel-body">
+											<form role="form" name="" method="post" action="doc_validation.php">
+												<div class="form-group">
+													<label for="doctorname">
+														Patient TRN
+													</label>
+													<input type="text" name="pattrn" value="<?php echo $pattrn; ?>" class="form-control"  placeholder="Enter Patient TRN" required="true">
+													<?php echo $errTRN; ?>
+												</div>
+												<div class="form-group">
+													<label for="doctorname">
+														Patient First Name
+													</label>
+													<input type="text" name="patfname" class="form-control" value="<?php echo $patfname; ?>" placeholder="Enter Patient First Name" required="true">
+													<?php echo $errFName; ?>
+												</div>
+												<div class="form-group">
+													<label for="doctorname">
+														Patient Last Name
+													</label>
+													<input type="text" name="patlname" class="form-control" value="<?php echo $patlname; ?>" placeholder="Enter Patient Last Name" required="true">
+													<?php echo $errLName; ?>
+												</div>
+												<div class="form-group">
+													<label for="fess">
+														Patient D.O.B.
+													</label>
+													<input type="Date" name="patdob" class="form-control" value="<?php echo $patdob; ?>" placeholder="Enter Patient D.O.B." required="true">
+													<?php echo $errDOB; ?>
+												</div>
+												<div class="form-group">
+													<label for="contact">
+														Patient Contact no
+													</label>
+													<input type="text" name="patcontact" class="form-control" value="<?php echo $patcontact; ?>" placeholder="Enter Patient Contact no" required="true" maxlength="10" pattern="[0-9]+">
+													<?php echo $errContact; ?>
+												</div>
+												<div class="form-group">
+													<label for="fess">
+														Patient Email
+													</label>
+													<input type="email" id="patemail" name="patemail" class="form-control" value="<?php echo $patemail; ?>" placeholder="Enter Patient Email id" required="true" onBlur="userAvailability()">
+													<span id="user-availability-status1" style="font-size:12px;"></span>
+													<?php echo $errEmail; ?>
+												</div>
+												<div class="form-group">
+													<label class="block">
+														Title
+													</label>
+													<div class="clip-radio radio-primary">
+														<select id="pattitle" name="pattitle">
+															<option value="" <?php if($pattitle == '') {echo "selected";} ?>>-- Please select Patient Title --</option>
+															<option value="Dr." <?php if($pattitle == 'Dr.') {echo "selected";} ?>>Dr.</option>
+															<option value="Miss" <?php if($pattitle == 'Miss') {echo "selected";} ?>>Miss</option>
+															<option value="Mr." <?php if($pattitle == 'Mr.') {echo "selected";} ?>>Mr.</option>
+															<option value="Mrs." <?php if($pattitle == 'Mrs.') {echo "selected";} ?>>Mrs.</option>
+															<option value="Ms." <?php if($pattitle == 'Ms.') {echo "selected";} ?>>Ms.</option>
+															<option value="Pastor" <?php if($pattitle == 'Pastor') {echo "selected";} ?>>Pastor</option>
+															<option value="Professor" <?php if($pattitle == 'Professor') {echo "selected";} ?>>Professor</option>
+														</select>
+														<?php echo $errTitle; ?>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="address">
+														Patient Address
+													</label>
+													<textarea name="pataddress" class="form-control" value="<?php echo $pataddress; ?>" placeholder="Enter Patient Address" required="true"></textarea>
+													<?php echo $errAddress; ?>
+												</div>
 
-<div class="form-group">
-<label for="doctorname">
-Patient Name
-</label>
-<input type="text" name="patname" class="form-control"  placeholder="Enter Patient Name" required="true">
-</div>
-<div class="form-group">
-<label for="fess">
- Patient Contact no
-</label>
-<input type="text" name="patcontact" class="form-control"  placeholder="Enter Patient Contact no" required="true" maxlength="10" pattern="[0-9]+">
-</div>
-<div class="form-group">
-<label for="fess">
-Patient Email
-</label>
-<input type="email" id="patemail" name="patemail" class="form-control"  placeholder="Enter Patient Email id" required="true" onBlur="userAvailability()">
-<span id="user-availability-status1" style="font-size:12px;"></span>
-</div>
-<div class="form-group">
-<label class="block">
-Gender
-</label>
-<div class="clip-radio radio-primary">
-<input type="radio" id="rg-female" name="gender" value="female" >
-<label for="rg-female">
-Female
-</label>
-<input type="radio" id="rg-male" name="gender" value="male">
-<label for="rg-male">
-Male
-</label>
-</div>
-</div>
-<div class="form-group">
-<label for="address">
-Patient Address
-</label>
-<textarea name="pataddress" class="form-control"  placeholder="Enter Patient Address" required="true"></textarea>
-</div>
-<div class="form-group">
-<label for="fess">
- Patient Age
-</label>
-<input type="text" name="patage" class="form-control"  placeholder="Enter Patient Age" required="true">
-</div>
-<div class="form-group">
-<label for="fess">
- Medical History
-</label>
-<textarea type="text" name="medhis" class="form-control"  placeholder="Enter Patient Medical History(if any)" required="true"></textarea>
-</div>	
-
-<button type="submit" name="submit" id="submit" class="btn btn-o btn-primary">
-Add
-</button>
-</form>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="col-lg-12 col-md-12">
-<div class="panel panel-white">
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>				
-</div>
-</div>
-</div>
+												<button type="submit" name="addpatsubmit" id="submit" class="btn btn-o btn-primary">
+													Add
+												</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-12">
+							<div class="panel panel-white">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>				
+		</div>
+		</div>
+		</div>
 			<!-- start: FOOTER -->
-<?php include('include/footer.php');?>
+		<?php include('include/footer.php');?>
 			<!-- end: FOOTER -->
 		
 			<!-- start: SETTINGS -->
-<?php include('include/setting.php');?>
+		<?php include('include/setting.php');?>
 			
 			<!-- end: SETTINGS -->
 		</div>

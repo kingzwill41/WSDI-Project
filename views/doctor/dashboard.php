@@ -1,9 +1,9 @@
 <?php
 	session_start();
-	//error_reporting(0);
+	error_reporting(0);
 	include('include/config.php');
-	//include('include/checklogin.php');
-	//check_login();
+	include('include/checklogin.php');
+	check_login();
 
 ?>
 <!DOCTYPE html>
@@ -45,7 +45,7 @@
 																	</div>
 								<ol class="breadcrumb">
 									<li>
-										<span>User</span>
+										<span>Doctor</span>
 									</li>
 									<li class="active">
 										<span>Dashboard</span>

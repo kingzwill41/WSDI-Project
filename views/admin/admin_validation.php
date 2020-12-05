@@ -4,8 +4,6 @@
     
     if(isset($_POST['lgsubmit']))
     {
-        //check user err
-        //$_SESSION['errflag'] = 0;
 
         //capture admin information
         foreach($_POST as $key => $value)

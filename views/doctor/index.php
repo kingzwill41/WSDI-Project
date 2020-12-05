@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	
-	if(isset($_SESSION['err']))
+	if(isset($_SESSION['errflag']))
 	{
 		foreach($_SESSION as $key => $value)
 		{
@@ -13,10 +13,7 @@
 		$username = "";
 		$password = "";
 		
-		//$_SESSION['errUser'] = " ";
-		//$_SESSION['errPassword'] = " ";
-		//$_SESSION['username'] = " ";
-		$lgerr ="";
+		$lgerr = "";
 
 		session_destroy();
 	}
@@ -48,7 +45,7 @@
 				</div>
 				
 				<div class="box-login">
-					<form class="form-login" action="doc_Validation.php" method="post">
+					<form class="form-login" action="doc_validation.php" method="post">
 						<fieldset>
 							<legend>Sign in to your account</legend>
 							<p>
