@@ -1,3 +1,26 @@
+<?php
+	session_start();
+	//include("include/config.php");
+	
+	if(isset($_SESSION['errflag']))
+	{
+		foreach($_SESSION as $key => $value)
+		{
+			$$key = $value;
+		}
+		session_destroy();
+	}
+	else{
+		//default variable values
+		$username = "";
+		$password = "";
+
+		//default error message
+		$lgerr ="";
+
+		session_destroy();
+	}
+?>
 <!DOCHTML html>
 <html>
 	<head>
@@ -29,15 +52,16 @@
 				</div>
 				
 				<div class="box-login">
-					<form class="form-login" method="post">
+					<form class="form-login" method="post" action="admin_validation.php">
 						<fieldset>
 							<legend>Sign in to your account</legend>
 							<p>
 								Please enter your name and password to log in.
 							</p>
+							<?php echo $lgerr; ?>
 							<div class=form-group>
 								<span class="input-icon">
-									<input type="text" class="form-control" name="username" placeholder="Username" />
+									<input type="email" class="form-control" name="username" placeholder="Username" value="<?php echo $username; ?>" />
 									<i class="fa fa-user"></i>
 								</span>
 							</div>
@@ -49,7 +73,7 @@
 								<a href="#">Forgot Password?</a>
 							</div>
 							<div class="form-actions">
-								<button type="submit" class="btn btn-primary pull-right" name="submiit">
+								<button type="submit" class="btn btn-primary pull-right" name="lgsubmit">
 									Login <i class="fa fa-arrow-circle-right"></i>
 								</button>
 							</div>

@@ -1,11 +1,21 @@
 <?php
 	session_start();
 	
-	if(!isset($_SESSION['err']))
+	if(isset($_SESSION['errflag']))
 	{
-		$_SESSION['errUser'] = "";
-		$_SESSION['errPassword'] = "";
-		$_SESSION['username'] = "";
+		foreach($_SESSION as $key => $value)
+		{
+			$$key = $value;
+		}
+		session_destroy();
+	}
+	else{
+		$username = "";
+		$password = "";
+		
+		$lgerr = "";
+
+		session_destroy();
 	}
 	
 	//var_dump($_SESSION);
@@ -35,26 +45,25 @@
 				</div>
 				
 				<div class="box-login">
-					<form class="form-login" action="loginValidation.php" method="post">
+					<form class="form-login" action="doc_validation.php" method="post">
 						<fieldset>
 							<legend>Sign in to your account</legend>
 							<p>
 								Please enter your name and password to log in.
 							</p>
+							<?php echo $lgerr; ?>
 							<div class="form-group">
 								<span class="input-icon">
-									<input type="text" class="form-control" name="username" value="<?php echo $_SESSION['username']; ?>" placeholder="Username" />
+									<input type="text" class="form-control" name="username" value="<?php echo $username; ?>" placeholder="Username" />
 									<i class="fa fa-user"></i>
-									<?php echo $_SESSION['errUser']; ?>
 								</span>
 							</div>
 							<div class="form-group form-actions">
 								<span class="input-icon">
 									<input type="password" class="form-control password" name="password" placeholder="Password" />
 									<i class="fa fa-lock"></i>
-									<?php echo $_SESSION['errPassword']; session_destroy();?>
 								</span>
-								<a href="#">Forgot Password?</a>
+								<a href="forgot-password.php">Forgot Password?</a>
 							</div>
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary pull-right" name="loginSubmit">

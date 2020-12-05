@@ -51,7 +51,16 @@
 							<div class="button"><span><a href="#">Click Here</a></span></div>
 						</div>
 					</div>
-					
+					<div class="listview_1_of_3 images_1_of_3">
+						<div class="listimg listimg_1_of_2">
+							  <img src="images/grid-img1.png">
+						</div>
+						<div class="text list_1_of_2">
+							  <h3>Nurse Login</h3>
+							
+							  <div class="button"><span><a href="views/nurse/">Click Here</a></span></div>
+						</div>
+					</div>
 					<div class="listview_1_of_3 images_1_of_3">
 						<div class="listimg listimg_1_of_2">
 							  <img src="images/grid-img1.png">
