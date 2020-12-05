@@ -19,7 +19,7 @@
 					<a href="#">Register</a>
 				</li>
 				<li>
-					<a hre="aboutus.php">About Us</a>
+					<a href="Aboutus.php" class = "active">About Us</a>
 				<li>
 			</ul>
 		</div>
