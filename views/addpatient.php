@@ -1,8 +1,18 @@
 <?php
 	session_start();
-	
+	if(!isset($_SESSION['error1']))
+			{
+				$_SESSION['errTitle'] = "";
+				$_SESSION['errFName'] = "";
+				$_SESSION['errLName'] = "";
+				$_SESSION['errDate'] = "";
+				$_SESSION['errTRN'] = "";
+				$_SESSION['fName'] = $_SESSION['lName'] = $_SESSION['title'] = "";
+				$_SESSION['trn'] = $_SESSION['date'] = "";
+			}
+			//echo session_id();
 	//check if user is logged in
-	if(strlen($_SESSION['loginStatus'])==0)
+	/*if(strlen($_SESSION['loginStatus'])==0)
 	{
 		header("Location: ../views/doctor/index.php");
 	}
@@ -19,7 +29,7 @@
 			}
 			//echo session_id();
 		
-	}
+	}*/
 	
 	//var_dump($_SESSION);
 ?>
@@ -42,6 +52,7 @@
 		
 	</head>
 	<body class="login">
+		
 		<div class="row">
 			<div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 				<div class="logo margin-top-30">

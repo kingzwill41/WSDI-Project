@@ -7,8 +7,16 @@
 	
 	if(isset($_GET['cancel']))
 	{
-		mysqli_query($conn,"update appointment set doctorStatus='0' where id ='".$_GET['id']."'");
-        $_SESSION['msg']="Appointment canceled !!";
+		$query = "UPDATE appointment SET `Status`='Canceled' WHERE TRN ='".$_GET['id']."'";
+		mysqli_query($conn,$query);
+        $_SESSION['msg']="Appointment Canceled !!";
+	}
+
+	if(isset($_GET['active']))
+	{
+		$query = "UPDATE appointment SET `Status`='Active' WHERE TRN ='".$_GET['id']."'";
+		mysqli_query($conn,$query);
+        $_SESSION['msg']="Appointment Activated !!";
 	}
 ?>
 <!DOCTYPE html>
@@ -88,7 +96,6 @@
                                                             patient.TRN = appointment.TRN
 														 WHERE appointment.StaffID = '$id'";
 														 
-											//$selQuery = "SELECT patients.FirstName as fname,patients.LastName as lname,appointment.*  from guest_appointment join patients on patients.TRN=appointment.TRN where appointment.StaffID='".$_SESSION['id']."'";
 											$sql=mysqli_query($conn,$selQuery);
 											
 											$cnt=1;
@@ -101,31 +108,23 @@
 												<td class="center"><?php echo $cnt;?>.</td>
 												<td class="hidden-xs"><?php echo $row['fname']." ".$row['lname'];?></td>
 												<td><?php echo $row['Date'];?></td>
-												<td><?php echo $row['postingDate'];?></td>
-												<td>
-													<?php 
-													if(($row['Status']== "Pending") && ($row['doctorStatus']=="Pending"))  
-													{
-														echo "Pending";
-													}
-													if(($row['Status']=="Active") && ($row['doctorStatus']=="Active"))  
-													{
-														echo "Active";
-													}
-
-													if(($row['Status']=="Canceled") && ($row['doctorStatus']=="Canceled"))  
-													{
-														echo "Canceled";
-													}
-													?>
-												</td>
+												<td><?php echo $row['Status'];?></td>
 												<td >
 													<div class="visible-md visible-lg hidden-sm hidden-xs">
 														<?php 
-															if(($row['Status']==1) && ($row['doctorStatus']==1))  
+															if(($row['Status'])=="Pending" )  
 															{ 
 														?>
-														<a href="appointment-history.php?id=<?php echo $row['id']?>&cancel=update" onClick="return confirm('Are you sure you want to cancel this appointment ?')"class="btn btn-transparent btn-xs tooltips" title="Cancel Appointment" tooltip-placement="top" tooltip="Remove">Cancel</a>
+														<a href="appointment-history.php?id=<?php echo $row['TRN']?>&active=update" onClick="return confirm('Are you sure you want to switch this appointment to active?')"class="btn btn-transparent btn-xs tooltips" title="Activate Appointment" tooltip-placement="top" tooltip="Add">Activate</a>
+														<?php } else {
+
+															echo "Active";
+															} ?>
+														<?php 
+															if(($row['Status'])=="Pending" || ($row['Status'])=="Active")  
+															{ 
+														?>
+														| <a href="appointment-history.php?id=<?php echo $row['TRN']?>&cancel=update" onClick="return confirm('Are you sure you want to cancel this appointment ?')"class="btn btn-transparent btn-xs tooltips" title="Cancel Appointment" tooltip-placement="top" tooltip="Remove">Cancel</a>
 														<?php } else {
 
 															echo "Canceled";

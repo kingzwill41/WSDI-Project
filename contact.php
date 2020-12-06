@@ -1,16 +1,17 @@
 <?php
 	include_once('views/include/config.php');
-	/*if(isset($_POST['submit']))
+	if(isset($_POST['submit']))
 	{
-	$name=$_POST['fullname'];
-	$email=$_POST['emailid'];
-	$mobileno=$_POST['mobileno'];
-	$dscrption=$_POST['description'];
-	$query=mysqli_query($con,"insert into tblcontactus(fullname,email,contactno,message) value('$name','$email','$mobileno','$dscrption')");
-	echo "<script>alert('Your information succesfully submitted');</script>";
-	echo "<script>window.location.href ='contact.php'</script>";
+		$name=$_POST['fullname'];
+		$email=$_POST['emailid'];
+		$mobileno=$_POST['mobileno'];
+		$dscrption=$_POST['description'];
+		$query=mysqli_query($conn,"INSERT into contactus (fullname,email,contactno,message) value('$name','$email','$mobileno','$dscrption')");
 
-	}*/
+		echo "<script>alert('Your information succesfully submitted');</script>";
+		echo "<script>window.location.href ='contact.php'</script>";
+
+	}
 
 
 ?>
@@ -18,6 +19,7 @@
 <html>
 	<head>
 		<title>AMC | Contact us</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
 		<link href="css/style1.css" rel="stylesheet" type="text/css"  media="all" />
 		<link href='http://fonts.googleapis.com/css?family=Ropa+Sans' rel='stylesheet' type='text/css'>
 	</head>
@@ -39,21 +41,19 @@
 								<a href="index.php" >Home</a>
 							</li>
 							<li>
-								<a href="make-appointment">Make Appointment</a>
-							</li>
-							<li>
-								<a href="#" >Register</a>
+								<a href="book-appointment.php">Book Appointment</a>
 							</li>
 							<li>
 								<a href="aboutus.php" >About Us</a>
 							<li>
-							<li>
-								<a href="contact.php" class="active">Contact Us</a>
+							<li class="active">
+								<a href="contact.php" >Contact Us</a>
 							<li>
 						</ul>
 					</div>
-					<div class="clear"></div>
+					
 				</nav>
+				<div class="clear"></div>
 			</header>
 		    <div class="clear"> </div>
 		    <div class="wrap">
@@ -104,19 +104,9 @@
 			<div class="clear"> </div>
 		</div>
 	    <div class="clear"> </div>
-		<div class="footer">
-		   	<div class="wrap">
-		   		<div class="footer-left">
-		   			<ul>
-						<li><a href="index.php">Home</a></li>
-						
-						<li><a href="contact.php">contact</a></li>
-					</ul>
-		   		</div>
-		  
-		   		<div class="clear"> </div>
-		   </div>
-		</div>
+		<?php 
+			include("footer.php");
+		?>
 		<!--end-wrap-->
 	</body>
 </html>

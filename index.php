@@ -4,11 +4,9 @@
 		<title> Avocado Medical Centre</title>
 		<link href="images/logo.png" rel="icon" type="images/png" />
 		<link href="css/style.css"  rel="stylesheet" type="text/css" media="all"/>
-		<link href="http://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet"type="text/css"/>
 		<link href='http://fonts.googleapis.com/css?family=Ropa+Sans' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/responsiveslides.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script src="js/responsiveslides.min.js"></script>
 		<script>
 			//execute function() on page load
@@ -23,10 +21,33 @@
 		</script>
 	</head>
 	<body>
-		
-		<?php
-			include('header.php');
-		?>
+		<header>
+			<nav class="wrap ">
+                <a class="logo" href="index.php">
+                    <img src="images/logo.png" title="Avocado Logo" width="100px" height="100px" />
+                    <h1 style="float: right; text-size: 40px;">Avocado Medical Centre</h1>
+                </a>
+                        
+                <div class="top-nav" >
+                            
+                    <ul>
+                        <li class="active">
+                            <a href="index.php">Home</a>
+                        </li>
+                        <li>
+                            <a href="book-appointment.php" >Book Appointment</a>
+                        </li>
+                        <li>
+                            <a href="#" >About Us</a>
+                        <li>
+                        <li>
+                            <a href="contact.php">Contact Us</a>
+                        <li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </nav>
+		</header>
 		<div class="clear"></div>
 		
 		<div class="carousel">
@@ -46,21 +67,10 @@
 				<div class="section group">
 					<div class="listview_1_of_3 images_1_of_3">
 						<div class="listimg listimg_1_of_2">
-						  <img src="images/grid-img3.png">
-						</div>
-						<div class="text list_1_of_2">
-							<h3>Patients</h3>
-							<p>Register </p>
-							<!--<div class="button"><span><a href="views/addpatient.php">Click Here</a></span></div>-->
-							<div class="button"><span><a href="#">Click Here</a></span></div>
-						</div>
-					</div>
-					<div class="listview_1_of_3 images_1_of_3">
-						<div class="listimg listimg_1_of_2">
 							  <img src="images/grid-img1.png">
 						</div>
 						<div class="text list_1_of_2">
-							  <h3>Nurse Login</h3>
+							  <h3>Nurses Login</h3>
 							
 							  <div class="button"><span><a href="views/nurse/">Click Here</a></span></div>
 						</div>
