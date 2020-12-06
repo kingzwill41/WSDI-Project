@@ -59,4 +59,26 @@
 
     }
 
+    if(isset($_POST['submit']))
+	{
+        include("include/config.php");
+		$trn = $_POST['trn']; //get patient trn
+		$id = $_POST['docid']; //get doctor id
+		$appdate=$_POST['appdate']; // get appointment date
+		$time=$_POST['apptime']; // get appointment time
+		$status = "Pending"; // appoinment status
+		
+		$query = "INSERT INTO `appointment`(`TRN`, `StaffID`, `Date`, `Time`, `ReasonForVisit`, `Status`) VALUES 
+					('$trn','$id','$appdate','$time','$status')";
+
+		$result = mysqli_query($conn,$query);
+
+		if($result)
+		{
+            echo "<script>alert('Your appointment successfully booked');</script>";
+            header("Location: book-appointment.php");
+		}
+
+		//mysqli_close($conn);
+	}
 ?>

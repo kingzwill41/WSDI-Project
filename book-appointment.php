@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	error_reporting(0);
-	include('views/include/config.php');
+	include('include/config.php');
 
 	if(isset($_POST['submit']))
 	{
@@ -11,8 +11,9 @@
 		$time=$_POST['apptime']; // get appointment time
 		$status = "Pending"; // appoinment status
 		
-		$query = "INSERT INTO `appointment`(`TRN`, `StaffID`, `Date`, `Time`, `Status`) 
-				  VALUES('$trn','$id','$appdate','$time','$status')";
+		$query = "INSERT INTO `appointment`(`TRN`, `StaffID`, `Date`, `Time`, `ReasonForVisit`, `Status`) VALUES 
+					('$trn','$id','$appdate','$time','$status')";
+
 		$result = mysqli_query($conn,$query);
 
 		if($result)
