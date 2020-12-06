@@ -12,7 +12,6 @@
 			$$key = $value;
 		}
 
-
 		//validate username and password
 		//if(isset($username))
 		if(filter_var($username, FILTER_VALIDATE_EMAIL))
@@ -40,7 +39,7 @@
 			 include("include/config.php");
 			 
 			//write select query
-			$query = "SELECT * FROM staff WHERE Email='$username' && password='$password'";
+			$query = "SELECT * FROM staff WHERE Type='Doctor' && Email='$username' && password='$password'";
             $result = mysqli_query($conn, $query);
 			
 			$num = mysqli_num_rows($result);

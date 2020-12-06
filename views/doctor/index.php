@@ -3,6 +3,10 @@
 	
 	if(isset($_SESSION['errflag']))
 	{
+		foreach($_POST as $key => $value)
+		{
+			$key = $value;
+		}
 		foreach($_SESSION as $key => $value)
 		{
 			$$key = $value;

@@ -6,14 +6,13 @@
 	if(isset($_POST['submit']))
 	{
 		$trn = $_POST['trn']; //get patient trn
-		$id = $_POST['docid'];
+		$id = $_POST['docid']; //get doctor id
 		$appdate=$_POST['appdate']; // get appointment date
 		$time=$_POST['apptime']; // get appointment time
-		$reason = $_POST['visit']; //get reason for visit
-		$status = "Pending";
+		$status = "Pending"; // appoinment status
 		
-		$query = "INSERT INTO `appointment`(`TRN`, `StaffID`, `Date`, `Time`, `ReasonForVisit`, `Status`) 
-				  VALUES('$trn','$id','$appdate','$time','$reason','$status')";
+		$query = "INSERT INTO `appointment`(`TRN`, `StaffID`, `Date`, `Time`, `Status`) 
+				  VALUES('$trn','$id','$appdate','$time','$status')";
 		$result = mysqli_query($conn,$query);
 
 		if($result)
@@ -112,7 +111,8 @@
 																<option value="">Select Doctor</option>
 																
 																<?php 
-																$ret=mysqli_query($conn,"select * from staff where type='doctor'");
+																	$ret=mysqli_query($conn,"SELECT * FROM `staff` WHERE Type='doctor'");
+
 																	while($row=mysqli_fetch_assoc($ret))
 																	{
 																?>
@@ -125,7 +125,7 @@
 																?>
 															</select>
 														</div>
-														<div class="form-group" hidden>
+														<div class="form-group" >
 															<label for="consultancyfees">
 																Doctor ID
 															</label>
@@ -145,10 +145,6 @@
 																Time
 															</label>
 															<input class="form-control" name="apptime" id="timepicker1" required="required">eg : 10:00 PM
-														</div>														
-														<div>
-															<label for="visit">Reason For Visit</label>
-															<input type="text" name="visit" id="visit" class="form-control" require="required"/>
 														</div>
 														<br />
 														<button type="submit" name="submit" class="btn btn-o btn-primary">

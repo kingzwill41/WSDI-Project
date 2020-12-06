@@ -151,7 +151,7 @@
 											<td colspan="8"> No record found against this search</td>
 										</tr>
 			
-										<?php }} ?>
+										<?php } ?>
 									</table>
 							</div>
 						</div>

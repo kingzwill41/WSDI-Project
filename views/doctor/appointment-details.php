@@ -9,21 +9,20 @@
 	if(isset($_POST['update']))
 	{
 		$qid=intval($_GET['id']);
-		$adminremark=$_POST['adminremark'];
-		$isread=1;
-		$query=mysqli_query($conn,"Update contactus SET  AdminRemark='$adminremark',IsRead='$isread' where id='$qid'");
+		$reason=$_POST['visit'];
+		$query=mysqli_query($conn,"Update appointment SET  ReasonForVisit='$reason' where TRN='$qid'");
 
 		if($query)
 		{
-			echo "<script>alert('Admin Remark updated successfully.');</script>";
-			echo "<script>window.location.href ='read-query.php'</script>";
+			echo "<script>alert('Doctor Remark updated successfully.');</script>";
+			echo "<script>window.location.href ='appointment-history.php'</script>";
 		}
 	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Admin | Query Details</title>
+		<title>Doctor | Appointment Details</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -53,14 +52,14 @@
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Admin | Query Details</h1>
+									<h1 class="mainTitle">Doctor | Appointment Details</h1>
 								</div>
 								<ol class="breadcrumb">
 									<li>
-										<span>Admin</span>
+										<span>Doctor</span>
 									</li>
 									<li class="active">
-										<span>Query Details</span>
+										<span>Appointment Details</span>
 									</li>
 								</ol>
 							</div>
@@ -70,41 +69,41 @@
 						<div class="container-fluid container-fullw bg-white">
 							<div class="row">
 								<div class="col-md-12">
-									<h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Query Details</span></h5>
+									<h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Appointment Details</span></h5>
 									<table class="table table-hover" id="sample-table-1">
 		
 										<tbody>
 											<?php
 												$qid=intval($_GET['id']);
-												$sql=mysqli_query($conn,"SELECT * FROM contactus WHERE id='$qid'");
+												$sql=mysqli_query($conn,"SELECT * FROM appointment WHERE TRN='$qid'");
 												$cnt=1;
 												while($row=mysqli_fetch_assoc($sql))
 												{
 											?>
 
 											<tr>
-												<th>Full Name</th>
-												<td><?php echo $row['fullname'];?></td>
+												<th>Patient TRN</th>
+												<td><?php echo $row['TRN'];?></td>
 											</tr>
 
 											<tr>
-												<th>Email Id</th>
-												<td><?php echo $row['email'];?></td>
+												<th>StaffID</th>
+												<td><?php echo $row['StaffID'];?></td>
 											</tr>
 											<tr>
-												<th>Contact Numner</th>
-												<td><?php echo $row['contactno'];?></td>
+												<th>Appointment Date / Time</th>
+												<td><?php echo $row['Date']."/".$row['Time']?></td>
 											</tr>
 											<tr>
-												<th>Message</th>
-												<td><?php echo $row['message'];?></td>
+												<th>Appointment Status</th>
+												<td><?php echo $row['Status'];?></td>
 											</tr>
 
-											<?php if($row['AdminRemark']==""){?>	
+											<?php if($row['ReasonForVisit']==""){?>	
 											<form name="query" method="post">
 												<tr>
-													<th>Admin Remark</th>
-													<td><textarea name="adminremark" class="form-control" required="true"></textarea></td>
+													<th>Reason For Visit</th>
+													<td><textarea name="visit" class="form-control" required="true"></textarea></td>
 												</tr>
 												<tr>
 													<td>&nbsp;</td>
@@ -118,12 +117,8 @@
 											</form>												
 											<?php } else {?>										
 											<tr>
-												<th>Admin Remark</th>
-												<td><?php echo $row['AdminRemark'];?></td>
-											</tr>
-											<tr>
-												<th>Last Updation Date</th>
-												<td><?php echo $row['LastupdationDate'];?></td>
+												<th>Reason For Visit</th>
+												<td><?php echo $row['ReasonForVisit'];?></td>
 											</tr>
 											
 											<?php 

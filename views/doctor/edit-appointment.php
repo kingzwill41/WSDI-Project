@@ -116,6 +116,7 @@
                                                 <td><?php echo $row['Status'];?></td>
 												<td >
 													<div class="visible-md visible-lg hidden-sm hidden-xs">
+													<a href="appointment-details.php?id=<?php echo $row['TRN'];?>" class="btn btn-transparent btn-lg" title="View Details"><i class="fa fa-file"></i></a> |
 														<?php
 															if(($row['Status'])=="Canceled")
 															{

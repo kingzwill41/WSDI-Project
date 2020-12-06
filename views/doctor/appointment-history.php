@@ -84,8 +84,7 @@
 										</thead>
 										<tbody>
 										<?php
-											$id = $_SESSION['id']; 
-
+											$id = $_SESSION['id'];
 											$selQuery = "SELECT
                                                             patient.FirstName as fname,
                                                             patient.LastName as lname,
@@ -111,6 +110,14 @@
 												<td><?php echo $row['Status'];?></td>
 												<td >
 													<div class="visible-md visible-lg hidden-sm hidden-xs">
+														<a href="appointment-details.php?id=<?php echo $row['TRN'];?>" class="btn btn-transparent btn-lg" title="View Details"><i class="fa fa-file"></i></a> |
+														<?php 
+															if(($row['Status'])=="Canceled")
+															{
+																echo "Canceled";
+															}
+															else{
+														?>
 														<?php 
 															if(($row['Status'])=="Pending" )  
 															{ 
@@ -128,7 +135,7 @@
 														<?php } else {
 
 															echo "Canceled";
-															} ?>
+															}} ?>
 													</div>
 												</td>
 											</tr>
