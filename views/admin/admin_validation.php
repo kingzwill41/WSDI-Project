@@ -36,7 +36,7 @@
             include("include/config.php");
 
             //write select query
-            $query = "SELECT Email, Password FROM staff WHERE Email='$username' && password='$password'";
+            $query = "SELECT * FROM staff WHERE Email='$username' && password='$password'";
             $result = mysqli_query($conn, $query);
 
             if(mysqli_num_rows($result)== 1)
@@ -44,6 +44,8 @@
                 $_SESSION['lgerr'] = "<p style='color: green; font-weight:bold'>Username and Password match found.</p>";
                 $_SESSION['username'] = $username;
 
+                $row = mysqli_fetch_assoc($result);
+                $_SESSION['id'] = $row['StaffID'];
                 //redirect to admin dashboard
                 header("Location: dashboard.php");
                 exit();

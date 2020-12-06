@@ -1,3 +1,5 @@
+
+
 <?php
 	session_start();
 	error_reporting(0);
@@ -7,20 +9,26 @@
 	
 	if(isset($_POST['submit']))
 	{
-		$selQuery = "SELECT `Password` FROM  `staff` WHERE `Password`='".$_POST['cpass']."' && `StaffID`='".$_SESSION['id']."'";
-		$sql=mysqli_query($conn,$selQuery);
-		
-		$num=mysqli_fetch_assoc($sql);
-		if($num>0)
+		if(preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/",$_POST['npass']))
 		{
-			$query = "UPDATE `staff` SET `Password`='".$_POST['npass']."' WHERE `StaffID`='".$_SESSION['id']."'";
-			$update=mysqli_query($conn,$query);
-			$_SESSION['msg1']="Password Changed Successfully !!";
+			$selQuery = "SELECT `Password` FROM  `staff` WHERE `Password`='".$_POST['cpass']."' && `StaffID`='".$_SESSION['id']."'";
+			$sql=mysqli_query($conn,$selQuery);
+			
+			$num=mysqli_fetch_assoc($sql);
+			if($num>0)
+			{
+				$query = "UPDATE `staff` SET `Password`='".$_POST['npass']."' WHERE `StaffID`='".$_SESSION['id']."'";
+				$update=mysqli_query($conn,$query);
+				$_SESSION['msg1']="Password Changed Successfully !!";
+			}
+			else
+			{
+				$_SESSION['msg1']="Old Password does not match !!";
+			}
+		}else{
+				echo "<script>alert('Nurse Details updated Unsuccessfully');</script>";
 		}
-		else
-		{
-			$_SESSION['msg1']="Old Password does not match !!";
-		}
+
 	}
 ?>
 <!DOCTYPE html>

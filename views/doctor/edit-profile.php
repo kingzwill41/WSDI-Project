@@ -7,10 +7,13 @@
 	include('include/checklogin.php');
 	
 	if(isset($_POST['submit']))
-	{
+	{	
 		$docname=$_POST['docname'];
 		$password=$_POST['npass'];
 		$docemail=$_POST['docemail'];
+		if(preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/",$password))
+		{
+		
 		$id = $_SESSION['id'];
 		
 		$query = "UPDATE `staff` SET `Name`='$docname',`Email`='$docemail',`Password`='$password' WHERE StaffID='$id'";
@@ -20,6 +23,9 @@
 			echo "<script>alert('Doctor Details updated Successfully');</script>";
 
 		}
+	}else{
+			echo "<script>alert('Nurse Details updated Unsuccessfully');</script>";
+	}
 	}
 ?>
 <!DOCTYPE html>

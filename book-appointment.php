@@ -13,17 +13,17 @@
 		
 		$query = "INSERT INTO `appointment`(`TRN`, `StaffID`, `Date`, `Time`, `Status`) 
 				  VALUES('$trn','$id','$appdate','$time','$status')";
-
-		if(mysqli_query($conn,$query))
+			
+		if(mysqli_query($conn, $query))
 		{
             echo "<script>alert('Your appointment successfully booked');</script>";
             mysqli_close($conn);
-            header("location: book-appointment.php");
+            //header("location: book-appointment.php");
             
 		}else{
             echo "<script>alert('Appointment wasn't booked. you entered something wrong' );</script>";
             mysqli_close($conn);
-            header("location: book-appointment.php");
+            //header("location: book-appointment.php");
         }
 	}
 ?>

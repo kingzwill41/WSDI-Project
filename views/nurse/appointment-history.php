@@ -7,9 +7,9 @@
 	
 	if(isset($_GET['cancel']))
 	{
-		$query = "UPDATE appointment SET `Status`='Canceled' WHERE TRN ='".$_GET['id']."'";
+		$query = "UPDATE appointment SET `Status`='Cancelled' WHERE TRN ='".$_GET['id']."'";
 		mysqli_query($conn,$query);
-        $_SESSION['msg']="Appointment Canceled !!";
+        $_SESSION['msg']="Appointment Cancelled !!";
 	}
 
 	if(isset($_GET['active']))
@@ -112,9 +112,9 @@
 													<div class="visible-md visible-lg hidden-sm hidden-xs">
 														<a href="appointment-details.php?id=<?php echo $row['TRN'];?>" class="btn btn-transparent btn-lg" title="View Details"><i class="fa fa-file"></i></a> |
 														<?php 
-															if(($row['Status'])=="Canceled")
+															if(($row['Status'])=="Cancelled")
 															{
-																echo "Canceled";
+																echo "Cancelled";
 															}
 															else{
 														?>
@@ -134,7 +134,7 @@
 														| <a href="appointment-history.php?id=<?php echo $row['TRN']?>&cancel=update" onClick="return confirm('Are you sure you want to cancel this appointment ?')"class="btn btn-transparent btn-xs tooltips" title="Cancel Appointment" tooltip-placement="top" tooltip="Remove">Cancel</a>
 														<?php } else {
 
-															echo "Canceled";
+															echo "Cancelled";
 															}} ?>
 													</div>
 												</td>

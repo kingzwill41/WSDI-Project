@@ -146,7 +146,7 @@
 												<a href="book-appointment.php">
 													<a href="unread-queries.php">
 														<?php 
-															$sql= mysqli_query($con,"SELECT * FROM tblcontactus where  IsRead is null");
+															$sql= mysqli_query($conn,"SELECT * FROM contactus where  IsRead is null");
 															$num_rows22 = mysqli_num_rows($sql);
 														?>
 														Total New Queries :<?php echo htmlentities($num_rows22);   ?>	

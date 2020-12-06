@@ -2,18 +2,28 @@
 	session_start();
 	error_reporting(0);
 	include('include/config.php');
+	include('include/checklogin.php');
+	check_login();
 
-	if(isset($_GET['cancel']))
+	//updating Admin Remark
+	if(isset($_POST['update']))
 	{
-		$query = "UPDATE `appointment` SET `Status`='Cancelled' WHERE TRN ='".$_GET['id']."'";
-		mysqli_query($conn,$query);
-      	$_SESSION['msg']="Your appointment Cancelled !!";
+		$qid=intval($_GET['id']);
+		$adminremark=$_POST['adminremark'];
+		$isread=1;
+		$query=mysqli_query($conn,"Update contactus SET  AdminRemark='$adminremark',IsRead='$isread' where id='$qid'");
+
+		if($query)
+		{
+			echo "<script>alert('Admin Remark updated successfully.');</script>";
+			echo "<script>window.location.href ='read-query.php'</script>";
+		}
 	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Patient | Appointment History</title>
+		<title>Admin | Query Details</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -35,6 +45,7 @@
 			<?php include('include/sidebar.php');?>
 			<div class="app-content">
 				<?php include('include/header.php');?>
+					
 				<!-- end: TOP NAVBAR -->
 				<div class="main-content" >
 					<div class="wrap-content container" id="container">
@@ -42,14 +53,14 @@
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Patients  | Appointment History</h1>
-																	</div>
+									<h1 class="mainTitle">Admin | Query Details</h1>
+								</div>
 								<ol class="breadcrumb">
 									<li>
-										<span>Patients </span>
+										<span>Admin</span>
 									</li>
 									<li class="active">
-										<span>Appointment History</span>
+										<span>Query Details</span>
 									</li>
 								</ol>
 							</div>
@@ -59,96 +70,72 @@
 						<div class="container-fluid container-fullw bg-white">
 							<div class="row">
 								<div class="col-md-12">
-									<p style="color:red;"><?php echo htmlentities($_SESSION['msg']);?>
-										<?php echo htmlentities($_SESSION['msg']="");?>
-									</p>	
+									<h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Query Details</span></h5>
 									<table class="table table-hover" id="sample-table-1">
-										<thead>
-											<tr>
-												<th class="center">#</th>
-												<th class="hidden-xs">Doctor Name</th>
-												<th>Appointment Date / Time </th>
-												<th>Current Status</th>
-												<th>Action</th>
-												
-											</tr>
-										</thead>
+		
 										<tbody>
 											<?php
-												$query = "SELECT
-																staff.Name as docname,
-																appointment.*
-														  FROM appointment
-														  JOIN staff 
-														  ON staff.StaffID = appointment.StaffID";
-
-												$sql=mysqli_query($conn,$query);
-												
+												$qid=intval($_GET['id']);
+												$sql=mysqli_query($conn,"SELECT * FROM contactus WHERE id='$qid'");
 												$cnt=1;
 												while($row=mysqli_fetch_assoc($sql))
 												{
 											?>
 
 											<tr>
-												<td class="center"><?php echo $cnt;?>.</td>
-												<td class="hidden-xs"><?php echo $row['docname'];?></td>
-												<td>
-													<?php echo $row['Date'];?> / <?php echo
-												 	$row['Time'];?>
-												</td>
-												<td ><?php echo $row['Status'];?></td>
-												<td >
-													<div class="visible-md visible-lg hidden-sm hidden-xs">
-														<?php if(($row['Status'])=="Pending" || ($row['Status'])=="Active")  
-															{ 
-														?>
-														<a href="appointment-history.php?id=<?php echo $row['TRN']?>&cancel=update" onClick="return confirm('Are you sure you want to cancel this appointment ?')"class="btn btn-transparent btn-xs tooltips" title="Cancel Appointment" tooltip-placement="top" tooltip="Remove">Cancel</a>
-														<?php 
-															} 
-															else {
-															echo "Cancelled";
-															} 
-														?>
-													</div>
-													<div class="visible-xs visible-sm hidden-md hidden-lg">
-														<div class="btn-group" dropdown is-open="status.isopen">
-															<button type="button" class="btn btn-primary btn-o btn-sm dropdown-toggle" dropdown-toggle>
-																<i class="fa fa-cog"></i>&nbsp;<span class="caret"></span>
-															</button>
-															<ul class="dropdown-menu pull-right dropdown-light" role="menu">
-																<li>
-																	<a href="#">
-																		Edit
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		Share
-																	</a>
-																</li>
-																<li>
-																	<a href="#">
-																		Remove
-																	</a>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</td>
+												<th>Full Name</th>
+												<td><?php echo $row['fullname'];?></td>
+											</tr>
+
+											<tr>
+												<th>Email Id</th>
+												<td><?php echo $row['email'];?></td>
+											</tr>
+											<tr>
+												<th>Contact Numner</th>
+												<td><?php echo $row['contactno'];?></td>
+											</tr>
+											<tr>
+												<th>Message</th>
+												<td><?php echo $row['message'];?></td>
+											</tr>
+
+											<?php if($row['AdminRemark']==""){?>	
+											<form name="query" method="post">
+												<tr>
+													<th>Admin Remark</th>
+													<td><textarea name="adminremark" class="form-control" required="true"></textarea></td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td>	
+														<button type="submit" class="btn btn-primary pull-left" name="update">
+															Update <i class="fa fa-arrow-circle-right"></i>
+														</button>
+
+													</td>
+												</tr>
+											</form>												
+											<?php } else {?>										
+											<tr>
+												<th>Admin Remark</th>
+												<td><?php echo $row['AdminRemark'];?></td>
+											</tr>
+											<tr>
+												<th>Last Updation Date</th>
+												<td><?php echo $row['LastupdationDate'];?></td>
 											</tr>
 											
 											<?php 
-												$cnt=$cnt+1;
-											 	}
-											?>
-											
+											 }} ?>
 											
 										</tbody>
 									</table>
 								</div>
 							</div>
 								</div>
-						
+							</div>
+						</div>
 						<!-- end: BASIC EXAMPLE -->
 						<!-- end: SELECT BOXES -->
 						
@@ -156,11 +143,11 @@
 				</div>
 			</div>
 			<!-- start: FOOTER -->
-		<?php include('include/footer.php');?>
+			<?php include('include/footer.php');?>
 			<!-- end: FOOTER -->
 		
 			<!-- start: SETTINGS -->
-		<?php include('include/setting.php');?>
+			<?php include('include/setting.php');?>
 			
 			<!-- end: SETTINGS -->
 		</div>

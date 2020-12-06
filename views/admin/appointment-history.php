@@ -65,7 +65,7 @@
 												<th class="center">#</th>
 												<th class="hidden-xs">TRN</th>
 												<th>StaffID</th>
-												<th>Date</th>
+												<th>Appointment Date / Time</th>
 												<th>Reason for Visit</th>
 												<th>Status</th>
 												<th>Action</th>
@@ -78,7 +78,16 @@
 												include('include/config.php');
 
 												//write query string
-												$selQuery = "SELECT * FROM appointment";
+												$selQuery = "SELECT 
+																staff.Name as docname,
+																patient.FirstName as fname,
+																patient.LastName as lname,
+																appointment.*
+															FROM appointment
+															JOIN staff
+															ON staff.StaffID = appointment.StaffID
+															JOIN patient
+															ON patient.TRN = appointment.TRN";
 
 												$results = mysqli_query($conn,$selQuery) or die("Could not find database record(s)".mysqli_error($conn));
 												
@@ -91,9 +100,22 @@
 												<td class="center"><?php echo $cnt;?>.</td>
 												<td class="hidden-xs"><?php echo $row['TRN'];?></td>
 												<td class="hidden-xs"><?php echo $row['StaffID'];?></td>
-												<td><?php echo $row['Date'];?></td>
+												<td><?php echo $row['Date'];?>/<?php echo $row['Time'] ?></td>
 												<td><?php echo $row['ReasonForVisit'];?></td>
 												<td><?php echo $row['Status'];?></td>
+												<td>
+													<div class="visible-md visible-lg hidden-sm hidden-xs">
+														<?php 
+															if(($row['Status'])=="Pending" || ($row['Status'])=="Active")  
+															{
+																echo "No Action yet";
+															} 
+															else {
+																echo "Cancelled";
+															} 
+														?>
+													</div>
+												</td>
 												<td>
 													<div class="visible-xs visible-sm hidden-md hidden-lg">
 														<div class="btn-group" dropdown is-open="status.isopen">

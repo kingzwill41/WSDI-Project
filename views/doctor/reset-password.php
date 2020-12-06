@@ -6,15 +6,22 @@ include("include/config.php");
 
 if(isset($_POST['change']))
 {
-$name=$_SESSION['name'];
-$email=$_SESSION['email'];
-$newpassword=$_POST['password'];
-$query=mysqli_query($conn,"update staff set password='$newpassword' where Name='$name' and Email='$email'");
-if ($query) {
-echo "<script>alert('Password successfully updated.');</script>";
-echo "<script>window.location.href ='index.php'</script>";
-}
+		$name=$_SESSION['name'];
+		$email=$_SESSION['email'];
+		$newpassword=$_POST['password'];
 
+		if(preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/",$newpassword))
+		{
+			$query=mysqli_query($conn,"update staff set password='$newpassword' where Name='$name' and Email='$email'");
+			if ($query) {
+				echo "<script>alert('Password successfully updated.');</script>";
+				echo "<script>window.location.href ='index.php'</script>";
+			}
+		}
+		else
+		{
+				echo "<script>alert('Nurse Details updated Unsuccessfully');</script>";
+		}
 }
 
 

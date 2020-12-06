@@ -5,6 +5,32 @@
 	include('include/checklogin.php');
 	check_login();
 	
+	if(isset($_POST['changepwsubmit']))
+	{var_dump($_SESSION['id']);
+		if(preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/",$_POST['npass']))
+		{
+			$selQuery = "SELECT `Password` FROM  `staff` WHERE `Password`='".$_POST['cpass']."' && `StaffID`='".$_SESSION['id']."'";
+			
+			$sql=mysqli_query($conn,$selQuery);
+			if($sql)
+			{
+				$query = "UPDATE `staff` SET `Password`='".$_POST['npass']."' WHERE `StaffID`='".$_SESSION['id']."'";
+				
+				if(mysqli_query($conn, $query))
+				{
+					$_SESSION['msg1']="Password Changed Successfully !!";
+				}
+				
+			}
+			else
+			{
+				$_SESSION['msg1']="Old Password does not match !!";
+			}
+		}else{
+				echo "<script>alert('Nurse Details updated Unsuccessfully');</script>";
+		}
+
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -104,7 +130,7 @@
 													<p style="color:red;"><?php echo htmlentities($_SESSION['msg1']);?>
 														<?php echo htmlentities($_SESSION['msg1']="");?>
 													</p>	
-													<form role="form" name="chngpwd" method="post" action="admin_validation.php">
+													<form role="form" name="chngpwd" method="post">
 														<div class="form-group">
 															<label for="exampleInputEmail1">
 																Current Password

@@ -107,7 +107,52 @@
 	
 										<?php }?>
 									</table>
-                          
+									<?php
+										$query = "SELECT * from medicalhistory where TRN ='$vid'";
+										$ret = mysqli_query($conn,$query);
+									?>
+									<table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+										<tr align="center">
+											<th colspan="8" >Medical History</th> 
+										</tr>
+										<tr>
+											<th>#</th>
+											<th>Blood Pressure</th>
+											<th>Weight</th>
+											<th>Blood Sugar</th>
+											<th>Body Temprature</th>
+											<th>Medical Prescription</th>
+											<th>Visit Date</th>
+										</tr>
+										<?php  
+											$num = mysqli_num_rows($ret);
+											if($num>0)
+											{
+												while ($row=mysqli_fetch_assoc($ret)) 
+												{ 
+											
+										?>
+										<tr>
+											<td><?php echo $cnt;?></td>
+											<td><?php  echo $row['BloodPressure'];?></td>
+											<td><?php  echo $row['Weight'];?></td>
+											<td><?php  echo $row['BloodSugar'];?></td> 
+											<td><?php  echo $row['Temperature'];?></td>
+											<td><?php  echo $row['MedicalPres'];?></td>
+											<td><?php  echo $row['CreationDate'];?></td> 
+										</tr>
+										<?php
+													$cnt=$cnt+1;
+												}
+											}else 
+											{
+										?>
+										<tr>
+											<td colspan="8"> No record found against this search</td>
+										</tr>
+			
+										<?php } ?>
+									</table>
 							</div>
 						</div>
 					</div>

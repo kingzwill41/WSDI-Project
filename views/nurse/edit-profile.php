@@ -12,13 +12,18 @@
 		$password=$_POST['npass'];
 		$docemail=$_POST['nurseemail'];
 		$id = $_SESSION['id'];
-		
-		$query = "UPDATE `staff` SET `Name`='$docname',`Email`='$docemail',`Password`='$password' WHERE StaffID='$id'";
-		$sql=mysqli_query($conn,$query);
-		if($sql)
+
+		if(preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/",$password))
 		{
-			echo "<script>alert('Nurse Details updated Successfully');</script>";
-			header("location: dashboard.php");
+			$query = "UPDATE `staff` SET `Name`='$docname',`Email`='$docemail',`Password`='$password' WHERE StaffID='$id'";
+			$sql=mysqli_query($conn,$query);
+			if($sql)
+			{
+				echo "<script>alert('Nurse Details updated Successfully');</script>";
+				header("location: dashboard.php");
+			}
+		}else{
+				echo "<script>alert('Nurse Details updated Unsuccessfully');</script>";
 		}
 	}
 ?>
