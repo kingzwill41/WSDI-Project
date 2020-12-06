@@ -1,30 +1,31 @@
 <?php
 	session_start();
 
-	$_SESSION['idk'] = $did=intval($_GET['id']);// get doctor id
-	//error_reporting(0);
-	//include('include/config.php');
-	//include('include/checklogin.php');
-	/*if(isset($_POST['submit']))
+	//$_SESSION['idk'] = $did=intval($_GET['id']);// get doctor id
+	error_reporting(0);
+	include('include/config.php');
+	include('include/checklogin.php');
+	
+	if(isset($_POST['submit']))
 	{
-		$docspecialization=$_POST['Doctorspecialization'];
-	$docname=$_POST['docname'];
-	$docaddress=$_POST['clinicaddress'];
-	$docfees=$_POST['docfees'];
-	$doccontactno=$_POST['doccontact'];
-	$docemail=$_POST['docemail'];
-	$sql=mysqli_query($con,"Update doctors set specilization='$docspecialization',doctorName='$docname',address='$docaddress',docFees='$docfees',contactno='$doccontactno' where id='".$_SESSION['id']."'");
-	if($sql)
-	{
-	echo "<script>alert('Doctor Details updated Successfully');</script>";
+		$docname=$_POST['docname'];
+		$password=$_POST['npass'];
+		$docemail=$_POST['docemail'];
+		$id = $_SESSION['id'];
+		
+		$query = "UPDATE `staff` SET `Name`='$docname',`Email`='$docemail',`Password`='$password' WHERE StaffID='$id'";
+		$sql=mysqli_query($conn,$query);
+		if($sql)
+		{
+			echo "<script>alert('Doctor Details updated Successfully');</script>";
 
+		}
 	}
-	}*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Doctr | Edit Doctor Details</title>
+		<title>Doctor | Edit Doctor Details</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -86,7 +87,7 @@
 														include('include/config.php');
 
 														//write query string
-														$selQuery = "SELECT * FROM staff WHERE type='Doctor' AND StaffID = '$did'";
+														$selQuery = "SELECT * FROM `staff` WHERE `type`='Doctor' AND `Email` = '".$_SESSION['username']."'";
 														
 														//run query
 														$results = mysqli_query($conn,$selQuery) or die("Could not find database record(s)".mysqli_error($conn));
@@ -94,11 +95,8 @@
 														{
 													?>
 													<h4><?php echo htmlentities($data['Name']);?>'s Profile</h4>
-													<?php if($data['updationDate']){?>
-													<p><b>Profile Last Updation Date: </b><?php echo htmlentities($data['updationDate']);?></p>
-													<?php } ?>
 													<hr />
-													<form role="form" name="adddoc" method="post" action="doc_validation">
+													<form role="form" name="adddoc" method="post" onSubmit="return valid();">
 														<div class="form-group">
 															<label for="doctorname">
 																 Doctor Name
@@ -106,23 +104,24 @@
 															<input type="text" name="docname" class="form-control" value="<?php echo htmlentities($data['Name']);?>" >
 														</div>
 														<div class="form-group">
-															<label for="address">
+															<label for="fess">
 																 Doctor Email
 															</label>
 															<input type="email" name="docemail" class="form-control"  readonly="readonly"  value="<?php echo htmlentities($data['Email']);?>">
 														</div>
 														<div class="form-group">
-															<label for="address">
+															<label for="fess">
 																 Doctor Password
 															</label>
-															<input type="password" name="npass" class="form-control"  readonly="readonly"  value="<?php echo htmlentities($data['Password']);?>">
+															<input type="password" name="npass" class="form-control" required="required"  value="<?php echo htmlentities($data['Password']);?>">
 														</div>
 														<?php } ?>
-														
-														<button type="submit" name="editdocsubmit" class="btn btn-o btn-primary">
+
+														<button type="submit" name="submit" class="btn btn-o btn-primary">
 															Update
 														</button>
 													</form>
+
 												</div>
 											</div>
 										</div>

@@ -1,9 +1,12 @@
 <?php
 	session_start();
-	//include("include/config.php");
 	
 	if(isset($_SESSION['errflag']))
 	{
+		foreach($_POST as $key => $value)
+		{
+			$key = $value;
+		}
 		foreach($_SESSION as $key => $value)
 		{
 			$$key = $value;
@@ -11,15 +14,15 @@
 		session_destroy();
 	}
 	else{
-		//default variable values
 		$username = "";
 		$password = "";
-
-		//default error message
-		$lgerr ="";
+		
+		$lgerr = "";
 
 		session_destroy();
 	}
+	
+	//var_dump($_SESSION);
 ?>
 <!DOCHTML html>
 <html>
@@ -27,12 +30,6 @@
 		<link href="../../images/logo.png" rel="icon" type="images/png" />
 		<title>Nurse Login</title>
 		
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<meta content="" name="description" />
-		<meta content="" name="author" />
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
@@ -48,20 +45,20 @@
 		<div class="row">
 			<div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 				<div class="logo margin-top-30">
-					<a href="../../index.php"><h2>AMC | Nurse Login</h2></a>
+					<a href="../../index.php"><h2 title="Redirect to Welcome Page">AMC | Nurse Login</h2></a>
 				</div>
 				
 				<div class="box-login">
-					<form class="form-login" method="post" action="nurse_validation.php">
+					<form class="form-login" action="doc_validation.php" method="post">
 						<fieldset>
 							<legend>Sign in to your account</legend>
 							<p>
 								Please enter your name and password to log in.
 							</p>
 							<?php echo $lgerr; ?>
-							<div class=form-group>
+							<div class="form-group">
 								<span class="input-icon">
-									<input type="email" class="form-control" name="username" placeholder="Username" value="<?php echo $username; ?>" />
+									<input type="text" class="form-control" name="username" value="<?php echo $username; ?>" placeholder="Username" />
 									<i class="fa fa-user"></i>
 								</span>
 							</div>
@@ -70,10 +67,10 @@
 									<input type="password" class="form-control password" name="password" placeholder="Password" />
 									<i class="fa fa-lock"></i>
 								</span>
-								<a href="#">Forgot Password?</a>
+								<a href="forgot-password.php">Forgot Password?</a>
 							</div>
 							<div class="form-actions">
-								<button type="submit" class="btn btn-primary pull-right" name="lgsubmit">
+								<button type="submit" class="btn btn-primary pull-right" name="loginSubmit">
 									Login <i class="fa fa-arrow-circle-right"></i>
 								</button>
 							</div>

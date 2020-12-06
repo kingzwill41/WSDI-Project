@@ -22,6 +22,42 @@
   <link rel="stylesheet" href="css/aos.css">
   <link rel="stylesheet" href="css/style3.css">
 
+ 
+
+<style>
+.dropbtn {
+  background-color: #F0ECF9;
+  padding: 5px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 100px;
+
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #F0ECF9;}
+</style>
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -56,10 +92,18 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li><a href="index.php" class="nav-link">Home</a></li>
-                <li><a href="index.php" class="nav-link">Make Appointment</a></li>
+                <li><a href="book-appointment.php" class="nav-link">Make Appointment</a></li>
                 <li><a href="contact.php" class="nav-link">Contact Us</a></li>
-                <li><a href="login.php" class="nav-link">Login</a></li>
-
+                <li> 
+                    <div class="dropdown">
+                      <button class="dropbtn">Login</button>
+                      <div class="dropdown-content">
+                        <a href="views/nurse/index.php">Nurse Login</a>
+                        <a href="views/admin/index.php">Admin Login</a>
+                        <a href="views/doctor/index.php">Doctor Login</a>
+                      </div>
+                    </div>
+                </li>
               </ul>
             </nav>
           </div>
@@ -174,6 +218,7 @@
       </div>
     </div>
   </div>
+
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/jquery-ui.js"></script>
   <script src="js/popper.min.js"></script>

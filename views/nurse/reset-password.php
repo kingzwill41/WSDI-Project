@@ -3,12 +3,13 @@ session_start();
 //error_reporting(0);
 include("include/config.php");
 // Code for updating Password
+
 if(isset($_POST['change']))
 {
-$cno=$_SESSION['cnumber'];
+$name=$_SESSION['name'];
 $email=$_SESSION['email'];
-$newpassword=md5($_POST['password']);
-$query=mysqli_query($con,"update doctors set password='$newpassword' where contactno='$cno' and docEmail='$email'");
+$newpassword=$_POST['password'];
+$query=mysqli_query($conn,"update staff set password='$newpassword' where Name='$name' and Email='$email'");
 if ($query) {
 echo "<script>alert('Password successfully updated.');</script>";
 echo "<script>window.location.href ='index.php'</script>";
@@ -53,18 +54,18 @@ return true;
 		<div class="row">
 			<div class="main-login col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 				<div class="logo margin-top-30">
-				<a href="../index.html"><h2> HMS | Patient Reset Password</h2></a>
+				<a href="../index.html"><h2> AMC | Nurse Reset Password</h2></a>
 				</div>
 
 				<div class="box-login">
 					<form class="form-login" name="passwordreset" method="post" onSubmit="return valid();">
 						<fieldset>
 							<legend>
-								Patient Reset Password
+								Nurse Reset Password
 							</legend>
 							<p>
 								Please set your new password.<br />
-								<span style="color:red;"><?php echo $_SESSION['errmsg']; ?><?php echo $_SESSION['errmsg']="";?></span>
+								<span style="color:red;"><?php echo $_SESSION['errmsg']=""; ?><?php echo $_SESSION['errmsg']="";?></span>
 							</p>
 
 <div class="form-group">
@@ -97,7 +98,7 @@ return true;
 					</form>
 
 					<div class="copyright">
-						&copy; <span class="current-year"></span><span class="text-bold text-uppercase"> HMS</span>. <span>All rights reserved</span>
+						&copy; <span class="current-year"></span><span class="text-bold text-uppercase"> AMC</span>. <span>All rights reserved</span>
 					</div>
 			
 				</div>

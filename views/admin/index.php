@@ -79,13 +79,6 @@
 							</div>
 						</fieldset>
 					</form>
-					
-					<div class="copyright">
-						<?php
-							include('../../footer.php');
-						?>
-					</div>
-					
 				</div>
 			</div>
 		</div>

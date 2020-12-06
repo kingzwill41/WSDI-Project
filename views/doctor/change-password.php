@@ -1,25 +1,27 @@
 <?php
-session_start();
-error_reporting(0);
-include('include/config.php');
-include('include/checklogin.php');
-check_login();
-date_default_timezone_set('Asia/Kolkata');// change according timezone
-$currentTime = date( 'd-m-Y h:i:s A', time () );
-if(isset($_POST['submit']))
-{
-$sql=mysqli_query($con,"SELECT password FROM  doctors where password='".md5($_POST['cpass'])."' && id='".$_SESSION['id']."'");
-$num=mysqli_fetch_array($sql);
-if($num>0)
-{
- $con=mysqli_query($con,"update doctors set password='".md5($_POST['npass'])."', updationDate='$currentTime' where id='".$_SESSION['id']."'");
-$_SESSION['msg1']="Password Changed Successfully !!";
-}
-else
-{
-$_SESSION['msg1']="Old Password not match !!";
-}
-}
+	session_start();
+	error_reporting(0);
+	include('include/config.php');
+	include('include/checklogin.php');
+	check_login();
+	
+	if(isset($_POST['submit']))
+	{
+		$selQuery = "SELECT `Password` FROM  `staff` WHERE `Password`='".$_POST['cpass']."' && `StaffID`='".$_SESSION['id']."'";
+		$sql=mysqli_query($conn,$selQuery);
+		
+		$num=mysqli_fetch_assoc($sql);
+		if($num>0)
+		{
+			$query = "UPDATE `staff` SET `Password`='".$_POST['npass']."' WHERE `StaffID`='".$_SESSION['id']."'";
+			$update=mysqli_query($conn,$query);
+			$_SESSION['msg1']="Password Changed Successfully !!";
+		}
+		else
+		{
+			$_SESSION['msg1']="Old Password does not match !!";
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,44 +42,43 @@ $_SESSION['msg1']="Old Password not match !!";
 		<link rel="stylesheet" href="assets/css/styles.css">
 		<link rel="stylesheet" href="assets/css/plugins.css">
 		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
-<script type="text/javascript">
-function valid()
-{
-if(document.chngpwd.cpass.value=="")
-{
-alert("Current Password Filed is Empty !!");
-document.chngpwd.cpass.focus();
-return false;
-}
-else if(document.chngpwd.npass.value=="")
-{
-alert("New Password Filed is Empty !!");
-document.chngpwd.npass.focus();
-return false;
-}
-else if(document.chngpwd.cfpass.value=="")
-{
-alert("Confirm Password Filed is Empty !!");
-document.chngpwd.cfpass.focus();
-return false;
-}
-else if(document.chngpwd.npass.value!= document.chngpwd.cfpass.value)
-{
-alert("Password and Confirm Password Field do not match  !!");
-document.chngpwd.cfpass.focus();
-return false;
-}
-return true;
-}
-</script>
+		<script type="text/javascript">
+			function valid()
+			{
+				if(document.chngpwd.cpass.value=="")
+				{
+				alert("Current Password Filed is Empty !!");
+				document.chngpwd.cpass.focus();
+				return false;
+				}
+				else if(document.chngpwd.npass.value=="")
+				{
+					alert("New Password Filed is Empty !!");
+					document.chngpwd.npass.focus();
+					return false;
+				}
+				else if(document.chngpwd.cfpass.value=="")
+				{
+					alert("Confirm Password Filed is Empty !!");
+					document.chngpwd.cfpass.focus();
+					return false;
+				}
+				else if(document.chngpwd.npass.value!= document.chngpwd.cfpass.value)
+				{
+					alert("Password and Confirm Password Field do not match  !!");
+					document.chngpwd.cfpass.focus();
+					return false;
+				}
+				return true;
+			}
+		</script>
 
 	</head>
 	<body>
 		<div id="app">		
-<?php include('include/sidebar.php');?>
+			<?php include('include/sidebar.php');?>
 			<div class="app-content">
-				
-						<?php include('include/header.php');?>
+				<?php include('include/header.php');?>
 						
 				<!-- end: TOP NAVBAR -->
 				<div class="main-content" >
@@ -87,7 +88,7 @@ return true;
 							<div class="row">
 								<div class="col-sm-8">
 									<h1 class="mainTitle">Doctor | Change Password</h1>
-																	</div>
+								</div>
 								<ol class="breadcrumb">
 									<li>
 										<span>Doctor</span>
@@ -111,30 +112,29 @@ return true;
 													<h5 class="panel-title">Change Password</h5>
 												</div>
 												<div class="panel-body">
-								<p style="color:red;"><?php echo htmlentities($_SESSION['msg1']);?>
-								<?php echo htmlentities($_SESSION['msg1']="");?></p>	
+													<p style="color:red;"><?php echo htmlentities($_SESSION['msg1']);?>
+														<?php echo htmlentities($_SESSION['msg1']="");?>
+													</p>	
 													<form role="form" name="chngpwd" method="post" onSubmit="return valid();">
 														<div class="form-group">
 															<label for="exampleInputEmail1">
 																Current Password
 															</label>
-							<input type="password" name="cpass" class="form-control"  placeholder="Enter Current Password">
+															<input type="password" name="cpass" class="form-control"  placeholder="Enter Current Password">
 														</div>
 														<div class="form-group">
 															<label for="exampleInputPassword1">
 																New Password
 															</label>
-					<input type="password" name="npass" class="form-control"  placeholder="New Password">
+															<input type="password" name="npass" class="form-control"  placeholder="New Password">
 														</div>
 														
-<div class="form-group">
+														<div class="form-group">
 															<label for="exampleInputPassword1">
 																Confirm Password
 															</label>
-									<input type="password" name="cfpass" class="form-control"  placeholder="Confirm Password">
+															<input type="password" name="cfpass" class="form-control"  placeholder="Confirm Password">
 														</div>
-														
-														
 														
 														<button type="submit" name="submit" class="btn btn-o btn-primary">
 															Submit
@@ -163,11 +163,11 @@ return true;
 				</div>
 			</div>
 			<!-- start: FOOTER -->
-	<?php include('include/footer.php');?>
+			<?php include('include/footer.php');?>
 			<!-- end: FOOTER -->
 		
 			<!-- start: SETTINGS -->
-	<?php include('include/setting.php');?>
+			<?php include('include/setting.php');?>
 			<>
 			<!-- end: SETTINGS -->
 		</div>

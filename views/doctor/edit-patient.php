@@ -116,35 +116,35 @@
 													<input type="text" class="form-control"  value="<?php  echo $row['StaffID'];?>" readonly='true'>
 												</div>
 												<div class="form-group">
-													<label for="doctorname">
+													<label for="patfname">
 														First Name
 													</label>
 													<input type="text" name="patfname" class="form-control"  value="<?php  echo $row['FirstName'];?>" required="true">
 													<?php echo $errFName; ?>
 												</div>
 												<div class="form-group">
-													<label for="doctorname">
+													<label for="patlname">
 														Last Name
 													</label>
 													<input type="text" name="patlname" class="form-control"  value="<?php  echo $row['LastName'];?>" required="true">
 													<?php echo $errLName; ?>
 												</div>
 												<div class="form-group">
-													<label for="fess">
+													<label for="patdob">
 														D.O.B.
 													</label>
 													<input type="Date" name="patdob" class="form-control" value="<?php echo $row['DOB']; ?>" required="true">
 													<?php echo $errDOB; ?>
 												</div>
 												<div class="form-group">
-													<label for="fess">
+													<label for="patcontact">
 														Contact No.
 													</label>
 													<input type="text" name="patcontact" class="form-control"  value="<?php  echo $row['TelNo'];?>" required="true" maxlength="10" pattern="[0-9]+">
 													<?php echo $errContact; ?>
 												</div>
 												<div class="form-group">
-													<label for="fess">
+													<label for="patemail">
 														Email
 													</label>
 													<input type="email" id="patemail" name="patemail" class="form-control"  value="<?php  echo $row['Email'];?>" required="true">
@@ -152,7 +152,7 @@
 													<?php echo $errEmail; ?>
 												</div>
 												<div class="form-group">
-													<label class="block">
+													<label class="pattitle">
 														Title
 													</label>
 													<div class="clip-radio radio-primary">
@@ -170,17 +170,17 @@
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="address">
+													<label for="pataddress">
 														Patient Address
 													</label>
 													<textarea name="pataddress" class="form-control" required="true"><?php  echo $row['Address'];?></textarea>
 													<?php echo $errAddress; ?>
 												</div>
 												<div class="form-group">
-													<label for="fess">
+													<label for="creatdate">
 														Creation Date
 													</label>
-													<input type="text" class="form-control"  value="<?php  echo $row['CreationDate'];?>" readonly='true'>
+													<input type="text" name="creatdate" class="form-control"  value="<?php  echo $row['CreationDate'];?>" readonly='true'>
 												</div>
 												<?php } ?>
 												<button type="submit" name="uppatsubmit" id="submit" class="btn btn-o btn-primary">
@@ -192,6 +192,7 @@
 								</div>
 							</div>
 						</div>
+						
 					<div class="col-lg-12 col-md-12">
 						<div class="panel panel-white">
 						</div>

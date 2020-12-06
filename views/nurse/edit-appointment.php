@@ -7,19 +7,22 @@
 	
 	if(isset($_GET['cancel']))
 	{
-		mysqli_query($conn,"update appointment set doctorStatus='0' where id ='".$_GET['id']."'");
-        $_SESSION['msg']="Appointment canceled !!";
-    }
-    
-    /*if(isset$_GET['active']))
-    {
+		$query = "UPDATE appointment SET `Status`='Canceled' WHERE TRN ='".$_GET['id']."'";
+		mysqli_query($conn,$query);
+        $_SESSION['msg']="Appointment Canceled !!";
+	}
 
-    }*/
+	if(isset($_GET['active']))
+	{
+		$query = "UPDATE appointment SET `Status`='Active' WHERE TRN ='".$_GET['id']."'";
+		mysqli_query($conn,$query);
+        $_SESSION['msg']="Appointment Activated !!";
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-		<title>Doctor | Edit Appointment</title>
+		<title>Nurse | Edit Appointment</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -48,11 +51,11 @@
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Doctor  | Edit Appointment</h1>
+									<h1 class="mainTitle">Nurse  | Edit Appointment</h1>
 								</div>
 								<ol class="breadcrumb">
 									<li>
-										<span>Doctor </span>
+										<span>Nurse </span>
 									</li>
 									<li class="active">
 										<span>Edit Appointment</span>
@@ -108,12 +111,40 @@
 											<tr>
 												<td class="center"><?php echo $cnt;?>.</td>
 												<td class="hidden-xs"><?php echo $row['fname']." ".$row['lname'];?></td>
-												<td><?php echo $row['Date'];?></td>
+												<td><?php echo $row['Date'];?> / <?php echo $row['Time']?></td>
 												<td><?php echo $row['ReasonForVisit'];?></td>
                                                 <td><?php echo $row['Status'];?></td>
 												<td >
 													<div class="visible-md visible-lg hidden-sm hidden-xs">
-														
+													<a href="appointment-details.php?id=<?php echo $row['TRN'];?>" class="btn btn-transparent btn-lg" title="View Details"><i class="fa fa-file"></i></a> |
+														<?php
+															if(($row['Status'])=="Canceled")
+															{
+																echo "Canceled";
+															}
+															else{
+														?>
+														<?php 
+															if(($row['Status'])=="Pending" )  
+															{ 
+														?>
+														<a href="edit-appointment.php?id=<?php echo $row['TRN']?>&active=update" onClick="return confirm('Are you sure you want to switch this appointment to active?')"class="btn btn-transparent btn-xs tooltips" title="Activate Appointment" tooltip-placement="top" tooltip="Add">Activate</a>
+														<?php } else {
+
+															echo "Active";
+															} ?>
+														<?php 
+															if(($row['Status'])=="Pending" || ($row['Status'])=="Active")  
+															{ 
+														?>
+														|<a href="edit-appointment.php?id=<?php echo $row['TRN']?>&cancel=update" onClick="return confirm('Are you sure you want to cancel this appointment ?')"class="btn btn-transparent btn-xs tooltips" title="Cancel Appointment" tooltip-placement="top" tooltip="Remove">Cancel</a>
+														<?php 
+															} else {
+
+															echo "Canceled";
+															} 
+															}
+														?>
 													</div>
 												</td>
 											</tr>

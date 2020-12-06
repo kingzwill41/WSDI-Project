@@ -3,15 +3,15 @@
 	error_reporting(0);
 	include("include/config.php");
 	//Checking Details for reset password
-	/*if(isset($_POST['submit']))
+	if(isset($_POST['submit']))
 	{
-		$contactno=$_POST['contactno'];
+		$name=$_POST['name'];
 		$email=$_POST['email'];
-		$query=mysqli_query($con,"select id from  doctors where contactno='$contactno' and docEmail='$email'");
+		$query=mysqli_query($conn,"select staffid from  staff where Name='$name' and Email='$email'");
 		$row=mysqli_num_rows($query);
 		if($row>0){
 
-		$_SESSION['cnumber']=$contactno;
+		$_SESSION['name']=$name;
 		$_SESSION['email']=$email;
 		header('location:reset-password.php');
 	} else 
@@ -22,7 +22,7 @@
 
 		}
 
-	}*/
+	}
 ?>
 
 
@@ -53,23 +53,23 @@
 					<form class="form-login" method="post">
 						<fieldset>
 							<legend>
-								Doctor Password Recovery
+							Doctor Password Recovery
 							</legend>
 							<p>
-								Please enter your  Contact number and Email to recover your password.<br />
+								Please enter your name and Email to recover your password.<br />
 					
 							</p>
 
 							<div class="form-group form-actions">
 								<span class="input-icon">
-									<input type="text" class="form-control" name="contactno" placeholder="Registred Contact Number">
+									<input type="text" class="form-control" name="name" placeholder="Enter Name">
 									<i class="fa fa-lock"></i>
 									 </span>
 							</div>
 
 							<div class="form-group">
 								<span class="input-icon">
-									<input type="email" class="form-control" name="email" placeholder="Registred Email">
+									<input type="email" class="form-control" name="email" placeholder="Registered Email">
 									<i class="fa fa-user"></i> </span>
 							</div>
 
@@ -89,7 +89,7 @@
 					</form>
 
 					<div class="copyright">
-						&copy; <span class="current-year"></span><span class="text-bold text-uppercase"> HMS</span>. <span>All rights reserved</span>
+						&copy; <span class="current-year"></span><span class="text-bold text-uppercase"> AMC</span>. <span>All rights reserved</span>
 					</div>
 			
 				</div>
